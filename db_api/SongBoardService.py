@@ -38,12 +38,12 @@ async def GetCreatID(UserName: str, NickName: str, UserID: str, UserPassword: st
             """
 
             cursor.execute(query)
+            connection.commit()
             _logger.Info(
-                f"succeed to do 'GetCreatIDTable('{UserName}', '{NickName}', '{UserID}', '{UserPassword}', '{UserEmail}', '{CreatIdDatetime}')'")
-            return True
+                f"succeed to do 'GetCreatIDTable('{UserName}', '{NickName}', '{UserID}', '{UserPassword}', '{UserEmail}', '{IdCreatDatetime}')'")
 
     except Exception as ex:
-        _logger.Info(f"error to do 'GetCreatIDTable('{UserName}', '{NickName}', '{UserID}', '{UserPassword}', '{UserEmail}', '{CreatIdDatetime}')'")
+        _logger.Info(f"error to do 'GetCreatIDTable('{UserName}', '{NickName}', '{UserID}', '{UserPassword}', '{UserEmail}', '{IdCreatDatetime}')'")
 
 # 아이디 중복확인    
 async def GetReadID(UserID: str):
@@ -63,9 +63,9 @@ async def GetReadID(UserID: str):
             json_data = json.dumps(rv, indent=4)
             
             _logger.Info(
-                f"succeed to do 'GetCreatIDTable('{UserName}', '{NickName}', '{UserID}', '{UserPassword}', '{UserEmail}', '{CreatIdDatetime}')'")
+                f"succeed to do 'GetReadID('{UserID}')'")
             
             return json_data
 
     except Exception as ex:
-        _logger.Info(f"error to do 'GetCreatIDTable('{UserName}', '{NickName}', '{UserID}', '{UserPassword}', '{UserEmail}', '{CreatIdDatetime}')'")
+        _logger.Info(f"error to do 'GetReadID('{UserID}')'")
