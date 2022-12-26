@@ -3,35 +3,25 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route("/")
-def home():
+@app.route("/list")
+def listPage():
     
-    return render_template('index.html')
+    return render_template('list.html')
 
-@app.route("/dashboard")
-def dashboard():
+@app.route("/edit")
+def edit():
     
-    return render_template('/ahu/dashboard.html')
-
-@app.route("/chiller")
-def chiller():
+    return render_template('edit.html')
     
-    return render_template('/ahu/chiller.html')
-
-@app.route("/efficiency")
-def efficiency():
+@app.route("/view")
+def view():
     
-    return render_template('/efficiency/efficiency.html')
-
-@app.route("/day")
-def day():
+    return render_template('view.html')
     
-    return render_template('/power/day.html')
-
-@app.route("/hour")
-def hour():
+@app.route("/write")
+def write():
     
-    return render_template('/power/hour.html')
+    return render_template('write.html')
 
 if __name__ == '__main__':
 
