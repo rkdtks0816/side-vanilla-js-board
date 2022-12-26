@@ -23,14 +23,15 @@ a {
 
 .board_title {
     margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
 }
 
-.board_title strong {
+.board_title_text strong {
     font-size: 3rem;
 }
 
-.board_title p {
-    margin-top: 5px;
+.login_text {
     font-size: 1.4rem;
 }
 
