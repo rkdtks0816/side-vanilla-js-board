@@ -5,7 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1 
 
 # 컨테이너 내에서 코드가 실행될 경로 설정
-WORKDIR /
+WORKDIR /app
 # requirements.txt에 명시된 필요한 packages 설치
 COPY requirements.txt ./
 RUN pip install --upgrade pip
