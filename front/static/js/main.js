@@ -28,6 +28,7 @@ function CheckSignUp(){
   } else {
     CreatIDCall(UserName, NickName, UserID, UserPassword, UserEmail);
     alert("회원가입이 완료되었습니다.");
+    location.replace("/login");
   }
 }
 
@@ -39,12 +40,16 @@ function CheckLogin(){
   var UserID = document.getElementById('UserID').value;
   var UserPassword = document.getElementById('UserPassword').value;
   var LoginCheck = LoginCheckCall(UserID, UserPassword);
+  console.log(LoginCheck);
 
   if (LoginCheck === 0) {
     alert("존재하지 않는 회원 아이디입니다.");
   } else if (LoginCheck === 1) {
     alert("비밀번호가 일치하지 않습니다.");
-  } else {
+  } else if (LoginCheck === 2) {
     alert("로그인 되었습니다.");
+    location.replace("/");
+  } else {
+    alert("로그인 에러.");
   }
 }

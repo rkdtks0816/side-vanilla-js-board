@@ -115,11 +115,13 @@ function LoginCheckCall(UserID, UserPassword){
       } else {
         LoginCheckDone = 2;
       }
+      console.log(LoginCheckDone)
     }
     
   }).fail((err) => {
     console.log(err)
   })
+  console.log(LoginCheckDone)
   return LoginCheckDone;
 }
 

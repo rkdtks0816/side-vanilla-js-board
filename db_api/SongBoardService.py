@@ -70,7 +70,6 @@ async def GetReadNickName(NickName: str):
 
     except Exception as ex:
         _logger.Info(f"error to do 'GetReadNickName('{NickName}')'")
-    return connection
 
 # 아이디 정보 저장   
 async def GetCreatID(UserName: str, NickName: str, UserID: str, UserPassword: str, UserEmail: str, IdCreatDatetime: str):
@@ -131,12 +130,12 @@ async def GetLoginCheck(UserID: str):
             json_data = json.dumps(rv, indent=4)
             
             _logger.Info(
-                f"succeed to do 'GetReadNickName('{NickName}')'")
+                f"succeed to do 'GetLoginCheck('{UserID}')'")
             
             return json_data
 
     except Exception as ex:
-        _logger.Info(f"error to do 'GetReadNickName('{NickName}')'")
+        _logger.Info(f"error to do 'GetLoginCheck('{UserID}')'")
     return connection
 
 # Post #############################################################################################################################################
