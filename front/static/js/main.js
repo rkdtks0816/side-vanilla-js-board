@@ -8,6 +8,7 @@ function CheckSignUp(){
   var NickName = document.getElementById('NickName').value;
   var UserID = document.getElementById('UserID').value;
   var UserPassword = document.getElementById('UserPassword').value;
+  var UserPasswordCheck = document.getElementById('UserPasswordCheck').value;
   var UserEmail = document.getElementById('UserEmail').value;
 
   console.log(UserName, NickName, UserID, UserPassword, UserEmail);
@@ -22,7 +23,7 @@ function CheckSignUp(){
     alert("중복된 아이디입니다.");
   } else if (UserPassword.length < 2 || UserPassword.length >= 20) {
     alert("비밀번호는 2글자 이상 20글자 이하입니다.");
-  } else if (UserPassword !== UserPasswordCheckword) {
+  } else if (UserPassword !== UserPasswordCheck) {
     alert("비밀번호가 다릅니다.");
   } else if (!UserEmail.includes("@") || !UserEmail.includes(".")) {
     alert("올바른 이메일 형식이 아닙니다.");

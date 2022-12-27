@@ -99,8 +99,8 @@ a {
 .SignUp_form .UserNameForm input[type="text"],
 .SignUp_form .NickNameForm input[type="text"],
 .SignUp_form .UserIDForm input[type="text"],
-.SignUp_form .UserPasswordForm input[type="text"],
-.SignUp_form .UserPasswordCheckForm input[type="text"],
+.SignUp_form .UserPasswordForm input[type="password"],
+.SignUp_form .UserPasswordCheckForm input[type="password"],
 .SignUp_form .UserEmailForm input[type="text"] {
     padding: 10px;
     box-sizing: border-box;
@@ -201,7 +201,7 @@ a {
 }
 
 .login_form .UserIDForm input[type="text"],
-.login_form .UserPasswordForm input[type="text"] {
+.login_form .UserPasswordForm input[type="password"] {
     padding: 10px;
     box-sizing: border-box;
     width: 80%;
@@ -472,12 +472,9 @@ a {
     width: calc(100% - 100px);
 }
 
-.board_write .title input[type="text"] {
+.board_write .title input[type="text"]{
     padding: 10px;
     box-sizing: border-box;
-}
-
-.board_write .title input[type="text"] {
     width: 80%;
 }
 
