@@ -12,13 +12,7 @@ _logger = Logger.Logger("SongBoardService")
 # json dumps시 dict내용의 datatime클래스를 formatting string타입으로 바꿈
 def datetime_to_json_formatting(o):
     if isinstance(o, (date, datetime)):
-        return o.strftime('%Y%m%d%H%M%S')
-def datetime_to_json_formatting_daily(o):
-    if isinstance(o, (date, datetime)):
-        return o.strftime('%Y%m%d')
-def datetime_to_json_formatting_hour(o):
-    if isinstance(o, (date, datetime)):
-        return o.strftime('%Y%m%d%H')
+        return o.strftime('%Y-%m-%d %H:%M:%S')
 
 # DB 연동
 def GetConnection():
@@ -26,7 +20,7 @@ def GetConnection():
                                     db='db_song', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
     return connection
 
-# Login #############################################################################################################################################
+# SignUp #############################################################################################################################################
 
 # 아이디 중복확인    
 async def GetReadID(UserID: str):
@@ -117,6 +111,33 @@ async def GetDeleteID(UserID: str):
 
     except Exception as ex:
         _logger.Info(f"error to do 'GetDeleteID('{UserID}')'")
+
+# Login #############################################################################################################################################
+
+# 아이디 비밀번호 확인    
+async def GetLoginCheck(UserID: str):
+    try:
+        connection = GetConnection()
+
+        with connection.cursor() as cursor:
+            query = f"""
+                select UserID, UserPassword from UserTable
+                where UserID = '{UserID}';
+            """
+
+            cursor.execute(query)            
+            
+            rv = cursor.fetchall()
+            json_data = json.dumps(rv, indent=4)
+            
+            _logger.Info(
+                f"succeed to do 'GetReadNickName('{NickName}')'")
+            
+            return json_data
+
+    except Exception as ex:
+        _logger.Info(f"error to do 'GetReadNickName('{NickName}')'")
+    return connection
 
 # Post #############################################################################################################################################
 

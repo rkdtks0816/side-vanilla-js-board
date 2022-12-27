@@ -88,5 +88,38 @@ function ReadIDCall(UserID){
 
 // Login #############################################################################################################################################
 
+// 아이디 비밀번호 확인
+function LoginCheckCall(UserID, UserPassword){
+  var LoginCheckDone;
+  // api 호출
+  $.ajax({
+    url: `http://${ip}:${port}${LoginCheckAddress}`,
+    method: 'GET',
+    dataType: 'json',
+    data: { "UserID":  UserID },
+    async: false,
+  }).done((data) => {
 
+    if ( data.length === 0 ) {
+      LoginCheckDone = 0;
+    } else {
+      
+      // 데이터 정리
+      const convertData = {};
+      data.forEach(function(key){
+        convertData.UserID = key.UserID;
+        convertData.UserPassword = key.UserPassword;
+      })
+      if (convertData.UserPassword !== UserPassword) {
+        LoginCheckDone = 1;
+      } else {
+        LoginCheckDone = 2;
+      }
+    }
+    
+  }).fail((err) => {
+    console.log(err)
+  })
+  return LoginCheckDone;
+}
 

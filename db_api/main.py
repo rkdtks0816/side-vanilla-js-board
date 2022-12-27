@@ -66,7 +66,7 @@ async def welcome():
     """
     return HTMLResponse(content=html_content, status_code=200)
 
-# Login #############################################################################################################################################
+# SignUp #############################################################################################################################################
 
 # 아이디 중복확인    
 @app.get("/GetReadID")
@@ -90,6 +90,14 @@ async def GetCreatID(UserName: str, NickName: str, UserID: str, UserPassword: st
 @app.get("/GetDeleteID")
 async def GetDeleteID(UserID: str):
     result = await SongBoardService.GetDeleteID(UserID)
+    return Response(content=result, media_type="application/json")
+
+# Login #############################################################################################################################################
+
+# 아이디 중복확인    
+@app.get("/GetLoginCheck")
+async def GetLoginCheck(UserID: str):
+    result = await SongBoardService.GetLoginCheck(UserID)
     return Response(content=result, media_type="application/json")
 
 # Post #############################################################################################################################################

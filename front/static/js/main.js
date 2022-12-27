@@ -30,3 +30,21 @@ function CheckSignUp(){
     alert("회원가입이 완료되었습니다.");
   }
 }
+
+// Login #############################################################################################################################################
+
+// 유효성 검사
+
+function CheckLogin(){
+  var UserID = document.getElementById('UserID').value;
+  var UserPassword = document.getElementById('UserPassword').value;
+  var LoginCheck = LoginCheckCall(UserID, UserPassword);
+
+  if (LoginCheck === 0) {
+    alert("존재하지 않는 회원 아이디입니다.");
+  } else if (LoginCheck === 1) {
+    alert("비밀번호가 일치하지 않습니다.");
+  } else {
+    alert("로그인 되었습니다.");
+  }
+}
