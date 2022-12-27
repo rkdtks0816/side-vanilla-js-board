@@ -18,9 +18,11 @@ function CreatIDCall(UserName, NickName, UserID, UserPassword, UserEmail){
       "UserEmail":  UserEmail,
       "IdCreatDatetime":  today
     }
-  }).done(
-      alert("회원가입이 완료되었습니다.")
-  )
+  }).done((data) => {
+      alert("회원가입이 완료되었습니다.");
+  }).fail((err) => {
+    console.log(err)
+  })
 }
 
 // Login #############################################################################################################################################

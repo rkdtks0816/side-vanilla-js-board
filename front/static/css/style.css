@@ -154,7 +154,7 @@ a {
 }
 
 .SignUp {
-    width: 40px;
+    width: 60px;
     height: 50px;
     position: relative;
 }
@@ -162,9 +162,7 @@ a {
 .SignUp_text {
     font-size: 15px;
     position: absolute;
-    left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
 }
 
 .login_form {
@@ -256,7 +254,7 @@ a {
 }
 
 .login {
-    width: 40px;
+    width: 45px;
     height: 50px;
     position: relative;
 }
@@ -264,9 +262,7 @@ a {
 .login_text {
     font-size: 15px;
     position: absolute;
-    left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
 }
 
 .bt_wrap {
@@ -495,7 +491,7 @@ a {
     height: 300px;
     padding: 15px;
     box-sizing: border-box;
-    border: 0;
     resize: vertical;
+    margin-bottom: 15px;
 }
 
