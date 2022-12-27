@@ -8,6 +8,16 @@ def listPage():
     
     return render_template('list.html')
 
+@app.route("/SignUp")
+def SignUp():
+    
+    return render_template('SignUp.html')
+    
+@app.route("/login")
+def login():
+    
+    return render_template('login.html')
+
 @app.route("/edit")
 def edit():
     

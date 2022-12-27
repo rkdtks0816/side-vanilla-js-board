@@ -18,15 +18,21 @@
         </div>
         <div class="login_form_wrap">
             <div class="login_form">
-                <div class="UserNameForm">
+                <div class="UserIDForm">
                     <dl>
-                        <dt>이름</dt>
-                        <dd><input type="text" id="UserName" placeholder="제목 입력"></dd>
+                        <dt>아이디</dt>
+                        <dd><input type="text" id="UserID" placeholder="2 ~ 20 글자"></dd>
+                    </dl>
+                </div>
+                <div class="UserPasswordForm">
+                    <dl>
+                        <dt>비밀번호</dt>
+                        <dd><input type="text" id="UserPassword" placeholder="2 ~ 20 글자"></dd>
                     </dl>
                 </div>
             </div>
-            <div class="bt_wrap">
-                <a href="/write" class="on">등록</a>
+            <div class="loginbt_wrap">
+                <a href="#" onclick="location.back();" class="loginbt">로그인</a>
             </div>
         </div>
     </div>
