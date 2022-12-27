@@ -66,14 +66,54 @@ async def welcome():
     """
     return HTMLResponse(content=html_content, status_code=200)
 
-# 아이디 정보 DB 저장   
-@app.get("/GetCreatID")
-async def GetCreatID(UserName: str, NickName: str, UserID: str, UserPassword: str, UserEmail: str, IdCreatDatetime: str):
-    result = await SongBoardService.GetCreatID(UserName, NickName, UserID, UserPassword, UserEmail, IdCreatDatetime)
-    return Response(content=result, media_type="application/json")
+# Login #############################################################################################################################################
 
 # 아이디 중복확인    
 @app.get("/GetReadID")
 async def GetReadID(UserID: str):
     result = await SongBoardService.GetReadID(UserID)
+    return Response(content=result, media_type="application/json")
+
+# 닉네임 중복확인    
+@app.get("/GetReadNickName")
+async def GetReadNickName(NickName: str):
+    result = await SongBoardService.GetReadNickName(NickName)
+    return Response(content=result, media_type="application/json")
+    
+# 아이디 정보 저장  
+@app.get("/GetCreatID")
+async def GetCreatID(UserName: str, NickName: str, UserID: str, UserPassword: str, UserEmail: str, IdCreatDatetime: str):
+    result = await SongBoardService.GetCreatID(UserName, NickName, UserID, UserPassword, UserEmail, IdCreatDatetime)
+    return Response(content=result, media_type="application/json")
+
+# 아이디 정보 삭제    
+@app.get("/GetDeleteID")
+async def GetDeleteID(UserID: str):
+    result = await SongBoardService.GetDeleteID(UserID)
+    return Response(content=result, media_type="application/json")
+
+# Post #############################################################################################################################################
+
+# 게시글 저장   
+@app.get("/GetCreatPost")
+async def GetCreatPost(NickName: str, UserID: str, PostTitle: str, PostContent: str, PostCreatDatetime: str):
+    result = await SongBoardService.GetCreatPost(NickName, UserID, PostTitle, PostContent, PostCreatDatetime)
+    return Response(content=result, media_type="application/json")
+
+# 게시글 조회    
+@app.get("/GetReadPost")
+async def GetReadPost(NickName: str, PostTitle: str, PostCreatDatetime: str):
+    result = await SongBoardService.GetReadPost(NickName, PostTitle, PostCreatDatetime)
+    return Response(content=result, media_type="application/json")
+    
+# 게시글 수정    
+@app.get("/GetUpdatePost")
+async def GetUpdatePost(NickName: str, PostTitle: str, PostContent: str, PostCreatDatetime: str):
+    result = await SongBoardService.GetUpdatePost(NickName, PostTitle, PostContent, PostCreatDatetime)
+    return Response(content=result, media_type="application/json")
+
+# 게시글 삭제   
+@app.get("/GetDeletePost")
+async def GetDeletePost(NickName: str, PostCreatDatetime: str):
+    result = await SongBoardService.GetDeletePost(NickName, PostCreatDatetime)
     return Response(content=result, media_type="application/json")
