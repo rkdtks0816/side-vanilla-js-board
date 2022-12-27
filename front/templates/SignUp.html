@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>자유 게시판</title>
     <link rel="stylesheet" href="/static/css/css.css">
+	<script src="/static/libs/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
     <div class="SignUp_wrap">
@@ -34,13 +35,13 @@
                 <div class="UserPasswordForm">
                     <dl>
                         <dt>비밀번호</dt>
-                        <dd><input type="text" id="UserPassword" placeholder="2 ~ 20 글자"></dd>
+                        <dd><input type="password" id="UserPassword" placeholder="2 ~ 20 글자"></dd>
                     </dl>
                 </div>
                 <div class="UserPasswordCheckForm">
                     <dl>
                         <dt>비밀번호 확인</dt>
-                        <dd><input type="text" id="UserPasswordCheckword"></dd>
+                        <dd><input type="password" id="UserPasswordCheckword" placeholder="비밀번호를 똑같이 입력해 주세요."></dd>
                     </dl>
                 </div>
                 <div class="UserEmailForm">
