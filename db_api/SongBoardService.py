@@ -24,6 +24,7 @@ def datetime_to_json_formatting_hour(o):
 def GetConnection():
     connection = pymysql.connect(host='10.0.2.15', port=3306, user='root', password='1234',
                                     db='db_song', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+    return connection
 
 # Login #############################################################################################################################################
 
@@ -81,7 +82,7 @@ async def GetReadNickName(NickName: str):
 async def GetCreatID(UserName: str, NickName: str, UserID: str, UserPassword: str, UserEmail: str, IdCreatDatetime: str):
     try:
         connection = GetConnection()
-
+        
         with connection.cursor() as cursor:
             query = f"""
                 INSERT INTO UserTable VALUES ( '{UserName}', '{NickName}', '{UserID}', '{UserPassword}', '{UserEmail}', '{IdCreatDatetime}' );
@@ -92,10 +93,10 @@ async def GetCreatID(UserName: str, NickName: str, UserID: str, UserPassword: st
             connection.commit()
 
             _logger.Info(
-                f"succeed to do 'GetCreatIDTable('{UserName}', '{NickName}', '{UserID}', '{UserPassword}', '{UserEmail}', '{IdCreatDatetime}')'")
+                f"succeed to do 'GetCreatID('{UserName}', '{NickName}', '{UserID}', '{UserPassword}', '{UserEmail}', '{IdCreatDatetime}')'")
 
     except Exception as ex:
-        _logger.Info(f"error to do 'GetCreatIDTable('{UserName}', '{NickName}', '{UserID}', '{UserPassword}', '{UserEmail}', '{IdCreatDatetime}')'")
+        _logger.Info(f"error to do 'GetCreatID('{UserName}', '{NickName}', '{UserID}', '{UserPassword}', '{UserEmail}', '{IdCreatDatetime}')'")
 
 # 아이디 정보 삭제  
 async def GetDeleteID(UserID: str):
