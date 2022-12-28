@@ -82,9 +82,9 @@ function CheckLogin(){
 // 로그인
 function LoginLogout() {
   if (getCookie('UserID') !== null) {
-    $('.login').append(`<a onclick="deleteCookie('UserID')" class="login_text">로그아웃</a>`)
+    $('.login').html(`<a onclick="deleteCookie('UserID')" class="login_text">로그아웃</a>`)
   } else {
-    $('.login').append(`<a href="/login" class="login_text">로그인</a>`)
+    $('.login').html(`<a href="/login" class="login_text">로그인</a>`)
   }
 }
 
@@ -93,33 +93,25 @@ function LoginLogout() {
 // 등록 버튼
 function writebt() {
   if (getCookie('UserID') !== null) {
-    $('.bt_wrap').append(`<a href="/write" class="on">등록</a>`)
+    $('.bt_wrap').html(`<a href="/write" class="on">등록</a>`)
   } else {
-    $('.bt_wrap').append(``)
+    $('.bt_wrap').html(``)
   }
 }
 
 // 페이징
 function MainPaging () {
-  let totalData; //총 데이터 수
+  let totalData; //총 데이터
   let dataPerPage = 10; //한 페이지에 나타낼 글 수
   let pageCount = 10; //페이징에 나타낼 페이지 수
   let globalCurrentPage = 1; //현재 페이지
 
-  $.ajax({ // ajax로 데이터 가져오기
-    method: "GET",
-    url: "https://url/data?" + data,
-    dataType: "json",
-    success: function (d) {
-      //totalData 구하기
-      totalData = d.data.length;
-    }
-  });
+  totalData = LoginCheckCall()
   
   //글 목록 표시 호출 (테이블 생성)
-  displayData(1, dataPerPage);
+  displayData(1, dataPerPage, totalData);
   
   //페이징 표시 호출
-  paging(totalData, dataPerPage, pageCount, 1);
+  paging(totalData, dataPerPage, pageCount, 1, globalCurrentPage);
   
 }

@@ -1,8 +1,8 @@
 // 페이징 표시
-function paging(totalData, dataPerPage, pageCount, currentPage) {
+function paging(totalData, dataPerPage, pageCount, currentPage, globalCurrentPage) {
     console.log("currentPage : " + currentPage);
   
-    totalPage = Math.ceil(totalData / dataPerPage); //총 페이지 수
+    totalPage = Math.ceil(totalData[0] / dataPerPage); //총 페이지 수
     
     if(totalPage<pageCount){
       pageCount=totalPage;
@@ -22,51 +22,48 @@ function paging(totalData, dataPerPage, pageCount, currentPage) {
     let pageHtml = "";
   
     if (prev > 0) {
-      pageHtml += "<li><a href='#' id='prev'> 이전 </a></li>";
+      pageHtml += '<a href="#" class="bt prev"><</a>';
     }
   
    //페이징 번호 표시 
     for (var i = first; i <= last; i++) {
       if (currentPage == i) {
         pageHtml +=
-          "<li class='on'><a href='#' id='" + i + "'>" + i + "</a></li>";
+          `<a href="#" class="num on">${i}</a>`;
       } else {
-        pageHtml += "<li><a href='#' id='" + i + "'>" + i + "</a></li>";
+        pageHtml += `<a href="#" class="num">${i}</a>`;
       }
     }
   
     if (last < totalPage) {
-      pageHtml += "<li><a href='#' id='next'> 다음 </a></li>";
+      pageHtml += '<a href="#" class="bt next">></a>';
     }
   
-    $("#pagingul").html(pageHtml);
-    let displayCount = "";
-    displayCount = "현재 1 - " + totalPage + " 페이지 / " + totalData + "건";
-    $("#displayCount").text(displayCount);
-  
+    $(".board_page").html(pageHtml);
   
     //페이징 번호 클릭 이벤트 
-    $("#pagingul li a").click(function () {
-      let $id = $(this).attr("id");
+    $(".board_page a").click(function () {
+      let $class = $(this).attr("class");
       selectedPage = $(this).text();
   
-      if ($id == "next") selectedPage = next;
-      if ($id == "prev") selectedPage = prev;
+      if ($class == "next") selectedPage = next;
+      if ($class == "prev") selectedPage = prev;
       
-      //전역변수에 선택한 페이지 번호를 담는다...
       globalCurrentPage = selectedPage;
       //페이징 표시 재호출
-      paging(totalData, dataPerPage, pageCount, selectedPage);
+      paging(totalData, dataPerPage, pageCount, selectedPage, globalCurrentPage);
       //글 목록 표시 재호출
-      displayData(selectedPage, dataPerPage);
+      displayData(selectedPage, dataPerPage, totalData);
     });
   }
 
 //현재 페이지(currentPage)와 페이지당 글 개수(dataPerPage) 반영
-function displayData(currentPage, dataPerPage) {
+function displayData(currentPage, dataPerPage, totalData) {
 
-    let chartHtml = "";
-  
+    let ContHtml = "";
+    let TopHtml = "";
+    let TotalHtml = "";
+    var totalDataedit = totalData[1]
     currentPage = Number(currentPage);
     dataPerPage = Number(dataPerPage);
     
@@ -75,14 +72,30 @@ function displayData(currentPage, dataPerPage) {
       i < (currentPage - 1) * dataPerPage + dataPerPage;
       i++
     ) {
-      chartHtml +=
-        "<tr><td>" +
-        dataList[i].d1 +
-        "</td><td>" +
-        dataList[i].d2 +
-        "</td><td>" +
-        dataList[i].d3 +
-        "</td></tr>";
+        var data = totalDataedit[i];
+        console.log(data.PostTitle)
+        var PostTitle = data.PostTitle;
+        var NickName = data.NickName;
+        var PostCreatDatetime = data.PostCreatDatetime;
+
+        ContHtml += 
+            `<div>` +
+                `<div class="num">${i + 1}</div>` +
+                `<div class="title"><a href="/view">${PostTitle}</a></div>` +
+                `<div class="writer">${NickName}</div>` +
+                `<div class="date">${PostCreatDatetime}</div>` +
+                `<div class="count">0</div>` +
+            `</div>`;
     }
-    $("#dataTableBody").html(chartHtml);
+    TopHtml =
+        '<div class="top">' +
+            '<div class="num">번호</div>' +
+            '<div class="title">제목</div>' +
+            '<div class="writer">글쓴이</div>' +
+            '<div class="date">작성일</div>' +
+            '<div class="count">조회</div>' +
+        '</div>';
+
+    TotalHtml = TopHtml + ContHtml;
+    $(".board_list").html(TotalHtml);
   }

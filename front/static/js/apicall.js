@@ -129,7 +129,7 @@ function LoginCheckCall(UserID, UserPassword){
 
 // 전체 게시글 조회
 function LoginCheckCall(){
-  let totalDatalength; //총 데이터 수
+  let totalData = [];
 
   $.ajax({
     url: `http://${ip}:${port}${AllPostAddress}`,
@@ -138,11 +138,12 @@ function LoginCheckCall(){
     async: false,
     }).done((data) => {
 
-      totalDatalength = data.length;
+      totalData.push(data.length);
+      totalData.push(data);
       
     }).fail((err) => {
       console.log(err)
     })
-    console.log(LoginCheckDone)
-    return totalDatalength;
+    
+    return totalData;
 }
