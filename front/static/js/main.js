@@ -106,7 +106,7 @@ function MainPaging () {
   let pageCount = 10; //페이징에 나타낼 페이지 수
   let globalCurrentPage = 1; //현재 페이지
 
-  totalData = LoginCheckCall()
+  totalData = AllPostCall();
   
   //글 목록 표시 호출 (테이블 생성)
   displayData(1, dataPerPage, totalData);

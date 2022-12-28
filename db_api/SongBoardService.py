@@ -152,7 +152,7 @@ async def GetAllPost():
                     NickName,
                     PostCreatDatetime
                 from PostTable 
-                order by PostCreatDatetime;
+                order by PostCreatDatetime desc;
             """
 
             cursor.execute(query)       

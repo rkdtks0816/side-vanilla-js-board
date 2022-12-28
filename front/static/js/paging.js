@@ -63,28 +63,20 @@ function displayData(currentPage, dataPerPage, totalData) {
     let ContHtml = "";
     let TopHtml = "";
     let TotalHtml = "";
-    var totalDataedit = totalData[1]
+
     currentPage = Number(currentPage);
     dataPerPage = Number(dataPerPage);
-    
     for (
       var i = (currentPage - 1) * dataPerPage;
-      i < (currentPage - 1) * dataPerPage + dataPerPage;
+      i < (currentPage - 1) * dataPerPage + dataPerPage - 1;
       i++
     ) {
-        var data = totalDataedit[i];
-        console.log(data.PostTitle)
-        var PostTitle = data.PostTitle;
-        var NickName = data.NickName;
-        var PostCreatDatetime = data.PostCreatDatetime;
-
         ContHtml += 
             `<div>` +
                 `<div class="num">${i + 1}</div>` +
-                `<div class="title"><a href="/view">${PostTitle}</a></div>` +
-                `<div class="writer">${NickName}</div>` +
-                `<div class="date">${PostCreatDatetime}</div>` +
-                `<div class="count">0</div>` +
+                `<div class="title"><a href="/view">${totalData[1][i]}</a></div>` +
+                `<div class="writer">${totalData[2][i]}</div>` +
+                `<div class="date">${totalData[3][i]}</div>` +
             `</div>`;
     }
     TopHtml =
@@ -93,7 +85,6 @@ function displayData(currentPage, dataPerPage, totalData) {
             '<div class="title">제목</div>' +
             '<div class="writer">글쓴이</div>' +
             '<div class="date">작성일</div>' +
-            '<div class="count">조회</div>' +
         '</div>';
 
     TotalHtml = TopHtml + ContHtml;

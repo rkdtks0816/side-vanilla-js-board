@@ -128,7 +128,7 @@ function LoginCheckCall(UserID, UserPassword){
 // Post #############################################################################################################################################
 
 // 전체 게시글 조회
-function LoginCheckCall(){
+function AllPostCall(){
   let totalData = [];
 
   $.ajax({
@@ -138,8 +138,20 @@ function LoginCheckCall(){
     async: false,
     }).done((data) => {
 
+      // 데이터 정리
+      const PostTitleData = [];
+      const NickNameData = [];
+      const PostCreatDatetimeData = [];
+      data.forEach(function(key){
+        PostTitleData.push(key.PostTitle);
+        NickNameData.push(key.NickName);
+        PostCreatDatetimeData.push(key.PostCreatDatetime);
+      });
+
       totalData.push(data.length);
-      totalData.push(data);
+      totalData.push(PostTitleData);
+      totalData.push(NickNameData);
+      totalData.push(PostCreatDatetimeData);
       
     }).fail((err) => {
       console.log(err)

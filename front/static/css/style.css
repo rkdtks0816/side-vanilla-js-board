@@ -337,11 +337,7 @@ a {
 }
 
 .board_list .date {
-    width: 10%;
-}
-
-.board_list .count {
-    width: 10%;
+    width: 20%;
 }
 
 .board_page {
