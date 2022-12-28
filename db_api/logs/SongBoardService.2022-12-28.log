@@ -5,3 +5,5 @@
 2022-12-28 07:08:38,480 | SongBoardService | INFO | succeed to do 'GetLoginCheck('hi')'
 2022-12-28 07:10:06,297 | SongBoardService | INFO | succeed to do 'GetLoginCheck('hi')'
 2022-12-28 07:10:30,813 | SongBoardService | INFO | succeed to do 'GetLoginCheck('hi')'
+2022-12-28 10:31:32,549 | SongBoardService | INFO | succeed to do 'GetLoginCheck('hi')'
+2022-12-28 10:32:00,568 | SongBoardService | INFO | succeed to do 'GetLoginCheck('hi')'
