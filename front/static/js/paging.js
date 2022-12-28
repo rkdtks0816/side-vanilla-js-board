@@ -62,12 +62,11 @@ function paging(totalData, dataPerPage, pageCount, currentPage) {
     });
   }
 
-  //현재 페이지(currentPage)와 페이지당 글 개수(dataPerPage) 반영
+//현재 페이지(currentPage)와 페이지당 글 개수(dataPerPage) 반영
 function displayData(currentPage, dataPerPage) {
 
     let chartHtml = "";
   
-  //Number로 변환하지 않으면 아래에서 +를 할 경우 스트링 결합이 되어버림.. 
     currentPage = Number(currentPage);
     dataPerPage = Number(dataPerPage);
     
@@ -84,6 +83,6 @@ function displayData(currentPage, dataPerPage) {
         "</td><td>" +
         dataList[i].d3 +
         "</td></tr>";
-    } //dataList는 임의의 데이터임.. 각 소스에 맞게 변수를 넣어주면 됨...
+    }
     $("#dataTableBody").html(chartHtml);
   }

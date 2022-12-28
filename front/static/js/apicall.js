@@ -127,39 +127,22 @@ function LoginCheckCall(UserID, UserPassword){
 
 // Post #############################################################################################################################################
 
-// 아이디 비밀번호 확인
-function LoginCheckCall(UserID, UserPassword){
-  var LoginCheckDone;
-  // api 호출
-  $.ajax({
-    url: `http://${ip}:${port}${LoginCheckAddress}`,
-    method: 'GET',
-    dataType: 'json',
-    data: { "UserID":  UserID },
-    async: false,
-  }).done((data) => {
+// 전체 게시글 조회
+function LoginCheckCall(){
+  let totalDatalength; //총 데이터 수
 
-    if ( data.length === 0 ) {
-      LoginCheckDone = 0;
-    } else {
+  $.ajax({
+    url: `http://${ip}:${port}${AllPostAddress}`,
+    method: "GET",
+    dataType: "json",
+    async: false,
+    }).done((data) => {
+
+      totalDatalength = data.length;
       
-      // 데이터 정리
-      const convertData = {};
-      data.forEach(function(key){
-        convertData.UserID = key.UserID;
-        convertData.UserPassword = key.UserPassword;
-      })
-      if (convertData.UserPassword !== UserPassword) {
-        LoginCheckDone = 1;
-      } else {
-        LoginCheckDone = 2;
-      }
-      console.log(LoginCheckDone)
-    }
-    
-  }).fail((err) => {
-    console.log(err)
-  })
-  console.log(LoginCheckDone)
-  return LoginCheckDone;
+    }).fail((err) => {
+      console.log(err)
+    })
+    console.log(LoginCheckDone)
+    return totalDatalength;
 }
