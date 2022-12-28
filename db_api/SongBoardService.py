@@ -140,6 +140,34 @@ async def GetLoginCheck(UserID: str):
 
 # Post #############################################################################################################################################
 
+# 전체 게시글 조회
+async def GetAllPost():
+    try:
+        connection = GetConnection()
+
+        with connection.cursor() as cursor:
+            query = f"""
+                select
+                    PostTitle,
+                    NickName,
+                    PostCreatDatetime
+                from PostTable 
+                order by PostCreatDatetime;
+            """
+
+            cursor.execute(query)       
+            
+            rv = cursor.fetchall()
+            json_data = json.dumps(rv, default=datetime_to_json_formatting, indent=4)
+            
+            _logger.Info(
+                f"succeed to do 'GetAllPost()'")
+            
+            return json_data
+
+    except Exception as ex:
+        _logger.Info(f"error to do 'GetAllPost()'")
+
 # 게시글 저장   
 async def GetCreatPost(NickName: str, UserID: str, PostTitle: str, PostContent: str, PostCreatDatetime: str):
     try:

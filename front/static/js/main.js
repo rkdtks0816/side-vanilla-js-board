@@ -40,7 +40,7 @@ function CheckSignUp(){
 function setCookie(name, value, exp) {
 	var date = new Date();
 	date.setTime(date.getTime() + exp*24*60*60*1000);
-	document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+	document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/;SameSite=Lax';
 }
 
 // 쿠키 불러오기
@@ -52,7 +52,8 @@ function getCookie(name) {
 
 // 쿠키 삭제하기
 function deleteCookie(name) {
-	document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+	document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;SameSite=Lax';
+  window.location.reload();
 }
 
 // 유효성 검사
@@ -92,10 +93,72 @@ function LoginLogout() {
 // 등록 버튼
 function writebt() {
   if (getCookie('UserID') !== null) {
-    $('.board_list .bt_wrap').append(`<a href="/write" class="on">등록</a>`)
+    $('.bt_wrap').append(`<a href="/write" class="on">등록</a>`)
   } else {
-    $('.board_list .bt_wrap').append(``)
+    $('.bt_wrap').append(``)
   }
 }
 
-// 게시물 리스트
+// 페이징
+function paging(totalData, dataPerPage, pageCount, currentPage) {
+  console.log("currentPage : " + currentPage);
+
+  totalPage = Math.ceil(totalData / dataPerPage); //총 페이지 수
+  
+  if(totalPage<pageCount){
+    pageCount=totalPage;
+  }
+  
+  let pageGroup = Math.ceil(currentPage / pageCount); // 페이지 그룹
+  let last = pageGroup * pageCount; //화면에 보여질 마지막 페이지 번호
+  
+  if (last > totalPage) {
+    last = totalPage;
+  }
+
+  let first = last - (pageCount - 1); //화면에 보여질 첫번째 페이지 번호
+  let next = last + 1;
+  let prev = first - 1;
+
+  let pageHtml = "";
+
+  if (prev > 0) {
+    pageHtml += "<li><a href='#' id='prev'> 이전 </a></li>";
+  }
+
+ //페이징 번호 표시 
+  for (var i = first; i <= last; i++) {
+    if (currentPage == i) {
+      pageHtml +=
+        "<li class='on'><a href='#' id='" + i + "'>" + i + "</a></li>";
+    } else {
+      pageHtml += "<li><a href='#' id='" + i + "'>" + i + "</a></li>";
+    }
+  }
+
+  if (last < totalPage) {
+    pageHtml += "<li><a href='#' id='next'> 다음 </a></li>";
+  }
+
+  $("#pagingul").html(pageHtml);
+  let displayCount = "";
+  displayCount = "현재 1 - " + totalPage + " 페이지 / " + totalData + "건";
+  $("#displayCount").text(displayCount);
+
+
+  //페이징 번호 클릭 이벤트 
+  $("#pagingul li a").click(function () {
+    let $id = $(this).attr("id");
+    selectedPage = $(this).text();
+
+    if ($id == "next") selectedPage = next;
+    if ($id == "prev") selectedPage = prev;
+    
+    //전역변수에 선택한 페이지 번호를 담는다...
+    globalCurrentPage = selectedPage;
+    //페이징 표시 재호출
+    paging(totalData, dataPerPage, pageCount, selectedPage);
+    //글 목록 표시 재호출
+    displayData(selectedPage, dataPerPage);
+  });
+}

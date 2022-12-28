@@ -26,6 +26,9 @@ const LoginCheckAddress = '/GetLoginCheck';
 // Post #############################################################################################################################################
 
 // 게시글 저장
+const AllPostAddress = '/GetAllPost';
+
+// 게시글 저장
 const CreatPostAddress = '/GetCreatPost';
 
 // 게시글 조회

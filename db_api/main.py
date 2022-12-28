@@ -102,6 +102,12 @@ async def GetLoginCheck(UserID: str):
 
 # Post #############################################################################################################################################
 
+# 모든 게시글 조회  
+@app.get("/GetAllPost")
+async def GetAllPost():
+    result = await SongBoardService.GetAllPost()
+    return Response(content=result, media_type="application/json")
+
 # 게시글 저장   
 @app.get("/GetCreatPost")
 async def GetCreatPost(NickName: str, UserID: str, PostTitle: str, PostContent: str, PostCreatDatetime: str):
