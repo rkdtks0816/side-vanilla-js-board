@@ -19,29 +19,23 @@
         <div class="board_write_wrap">
             <div class="board_write">
                 <div class="title">
-                    <dl>
-                        <dt>제목</dt>
-                        <dd><input type="text" placeholder="제목 입력" value="글 제목이 들어갑니다"></dd>
-                    </dl>
                 </div>
                 <div class="cont">
-                    <textarea placeholder="내용 입력">
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                    </textarea>
                 </div>
             </div>
             <div class="bt_wrap">
-                <a href="/view" class="on">수정</a>
+                <a onclick="UpdatePost('UserID')" class="on">수정</a>
+                <a onclick="DeletePost()">삭제</a>
                 <a href="/view">취소</a>
             </div>
         </div>
     </div>
 </body>
 </html>
+<script src="/static/js/main.js"></script>
+<script src="/static/js/paging.js"></script>
+<script src="/static/js/address.js"></script>
+<script src="/static/js/apicall.js"></script>
+<script>
+    BeforePost();
+</script>

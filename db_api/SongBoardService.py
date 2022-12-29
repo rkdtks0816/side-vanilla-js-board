@@ -220,9 +220,6 @@ async def GetReadPost(NickName: str, PostTitle: str, PostCreatDatetime: str):
         with connection.cursor() as cursor:
             query = f"""
                 select
-                    PostTitle,
-                    NickName,
-                    PostCreatDatetime,
                     PostContent
                 from PostTable 
                 where 

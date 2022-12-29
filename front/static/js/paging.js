@@ -68,16 +68,18 @@ function displayData(currentPage, dataPerPage, totalData) {
     dataPerPage = Number(dataPerPage);
     for (
       var i = (currentPage - 1) * dataPerPage;
-      i < (currentPage - 1) * dataPerPage + dataPerPage - 1;
+      i < (currentPage - 1) * dataPerPage + dataPerPage;
       i++
     ) {
-        ContHtml += 
-            `<div>` +
-                `<div class="num">${i + 1}</div>` +
-                `<div class="title"><a href="/view">${totalData[1][i]}</a></div>` +
-                `<div class="writer">${totalData[2][i]}</div>` +
-                `<div class="date">${totalData[3][i]}</div>` +
-            `</div>`;
+      if (i < Number(totalData[0])) {
+          ContHtml += 
+              `<div>` +
+                  `<div class="num">${i + 1}</div>` +
+                  `<div class="title"><a onclick="PostCookie(${i})">${totalData[1][i]}</a></div>` +
+                  `<div class="writer">${totalData[2][i]}</div>` +
+                  `<div class="date">${totalData[3][i]}</div>` +
+              `</div>`;
+      }
     }
     TopHtml =
         '<div class="top">' +

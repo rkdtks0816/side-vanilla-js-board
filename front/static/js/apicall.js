@@ -128,7 +128,7 @@ function LoginCheckCall(UserID, UserPassword){
 // Post #############################################################################################################################################
 
 // 전체 게시글 조회
-function AllPostCall(){
+function AllPostCall() {
   let totalData = [];
 
   $.ajax({
@@ -172,10 +172,11 @@ function NickNameCall(UserID){
     data: { "UserID":  UserID },
     async: false,
   }).done((data) => {
-    NickName = data.NickName
+    NickName = data[0].NickName
   }).fail((err) => {
     console.log(err)
   })
+
   return NickName;
 }
 
@@ -198,6 +199,7 @@ function CreatPostCall(PostTitle, PostContent){
 
   let UserID = getCookie('UserID');
   let NickName = NickNameCall(UserID);
+  console.log(NickName)
   // api 호출
   $.ajax({
     url: `http://${ip}:${port}${CreatPostAddress}`,
@@ -216,7 +218,12 @@ function CreatPostCall(PostTitle, PostContent){
   }).fail((err) => {
     console.log(err)
   })
-  
+
+  deleteCookie('PostNum');
+  deleteCookie('NickName');
+  deleteCookie('PostTitle');
+  deleteCookie('PostCreatDatetime');
+
   setCookie('PostNum', 1, 1);
   setCookie('NickName', NickName, 1);
   setCookie('PostTitle', PostTitle, 1);
@@ -225,9 +232,8 @@ function CreatPostCall(PostTitle, PostContent){
 }
 
 // 게시글 조회
-function CreatPostCall(NickName, PostTitle, PostCreatDatetime){
+function ReadPostCall(NickName, PostTitle, PostCreatDatetime){
   let PostContent;
-  let NickName = NickNameCall(UserID);
 
   // api 호출
   $.ajax({
@@ -241,11 +247,56 @@ function CreatPostCall(NickName, PostTitle, PostCreatDatetime){
     },
     async: false,
   }).done((data) => {
-    PostContent = data.PostContent;
+    console.log(data);
+    PostContent = data[0].PostContent;
   }).fail((err) => {
     console.log(err)
   })
 
   return PostContent;
+
+}
+
+// 게시글 수정
+function UpdatePostCall(NickName, PostTitleUpdate, PostContentUpdate, PostCreatDatetime){
+
+  // api 호출
+  $.ajax({
+    url: `http://${ip}:${port}${UpdatePostAddress}`,
+    method: 'GET',
+    dataType: 'json',
+    data: { 
+      "NickName":  NickName,
+      "PostTitle":  PostTitleUpdate,
+      "PostContent":  PostContentUpdate,
+      "PostCreatDatetime":  PostCreatDatetime
+    },
+    async: false,
+  }).done((data) => {
+    console.log(data)
+  }).fail((err) => {
+    console.log(err)
+  })
+
+}
+
+// 게시글 삭제
+function DeletePostCall(NickName, PostCreatDatetime){
+
+  // api 호출
+  $.ajax({
+    url: `http://${ip}:${port}${DeletePostAddress}`,
+    method: 'GET',
+    dataType: 'json',
+    data: { 
+      "NickName":  NickName,
+      "PostCreatDatetime":  PostCreatDatetime
+    },
+    async: false,
+  }).done((data) => {
+    console.log(data)
+  }).fail((err) => {
+    console.log(err)
+  })
 
 }
