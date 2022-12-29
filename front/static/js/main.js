@@ -100,7 +100,7 @@ function writebt() {
 }
 
 // 페이징
-function MainPaging () {
+function MainPaging() {
   let totalData; //총 데이터
   let dataPerPage = 10; //한 페이지에 나타낼 글 수
   let pageCount = 10; //페이징에 나타낼 페이지 수
@@ -117,16 +117,60 @@ function MainPaging () {
 }
 
 // 게시글 작성
-function CreatPost () {
+function CreatPost() {
   var PostTitle = document.getElementById('PostTitle').value;
   var PostContent = document.getElementById('PostContent').value;
 
   CreatPostCall(PostTitle, PostContent);
-  
-  //글 목록 표시 호출 (테이블 생성)
-  displayData(1, dataPerPage, totalData);
-  
-  //페이징 표시 호출
-  paging(totalData, dataPerPage, pageCount, 1, globalCurrentPage);
-  
+
+  location.replace("/view");
+
+}
+
+// 게시글 조회
+function ReadPost() {
+  var PostNum = getCookie('PostNum');
+  var NickName = getCookie('NickName');
+  var PostTitle = getCookie('PostTitle');
+  var PostCreatDatetime = getCookie('PostCreatDatetime');
+  var PostContent = CreatPostCall(NickName, PostTitle, PostCreatDatetime);
+
+  $('.title').html(`${PostTitle}`);
+  $('.info').html(
+    `<dl>` +
+        `<dt>번호</dt>` +
+        `<dd>${PostNum}</dd>` +
+    `</dl>` +
+    `<dl>` +
+        `<dt>글쓴이</dt>` +
+        `<dd>${NickName}</dd>` +
+    `</dl>` +
+    `<dl>` +
+        `<dt>작성일</dt>` +
+        `<dd>${PostCreatDatetime}</dd>` +
+    `</dl>`
+  );
+  $('.cont').html(`${PostContent}`);
+
+  deleteCookie('PostNum');
+  deleteCookie('NickName');
+  deleteCookie('PostTitle');
+  deleteCookie('PostCreatDatetime');
+
+  return NickName;
+}
+
+// 수정 버튼
+function updatebt(NickName) {
+  var UserID = getCookie('UserID');
+  var NowUser = NickNameCall(UserID);
+
+  if (NickName === NowUser) {
+    $('.bt_wrap').html(
+      `<a href="/" class="on">목록</a>`
+      `<a href="/edit">수정</a>`
+    )
+  } else {
+    $('.bt_wrap').html(`<a href="/" class="on">목록</a>`)
+  }
 }

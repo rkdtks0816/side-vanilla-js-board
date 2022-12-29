@@ -16,7 +16,7 @@ function CreatIDCall(UserName, NickName, UserID, UserPassword, UserEmail){
   minutes = minutes < 10 ? `0${minutes}` : minutes;
   let Seconds = today.getSeconds();
   Seconds = Seconds < 10 ? `0${Seconds}` : Seconds;
-  let today_edit = `${year}${month}${date}${hour}${minutes}${Seconds}`
+  let today_edit = `${year}-${month}-${date} ${hour}:${minutes}:${Seconds}`
 
   // api 호출
   $.ajax({
@@ -194,7 +194,7 @@ function CreatPostCall(PostTitle, PostContent){
   minutes = minutes < 10 ? `0${minutes}` : minutes;
   let Seconds = today.getSeconds();
   Seconds = Seconds < 10 ? `0${Seconds}` : Seconds;
-  let today_edit = `${year}${month}${date}${hour}${minutes}${Seconds}`
+  let today_edit = `${year}-${month}-${date} ${hour}:${minutes}:${Seconds}`
 
   let UserID = getCookie('UserID');
   let NickName = NickNameCall(UserID);
@@ -216,4 +216,36 @@ function CreatPostCall(PostTitle, PostContent){
   }).fail((err) => {
     console.log(err)
   })
+  
+  setCookie('PostNum', 1, 1);
+  setCookie('NickName', NickName, 1);
+  setCookie('PostTitle', PostTitle, 1);
+  setCookie('PostCreatDatetime', today_edit, 1);
+
+}
+
+// 게시글 조회
+function CreatPostCall(NickName, PostTitle, PostCreatDatetime){
+  let PostContent;
+  let NickName = NickNameCall(UserID);
+
+  // api 호출
+  $.ajax({
+    url: `http://${ip}:${port}${ReadPostAddress}`,
+    method: 'GET',
+    dataType: 'json',
+    data: { 
+      "NickName":  NickName,
+      "PostTitle":  PostTitle,
+      "PostCreatDatetime":  PostCreatDatetime,
+    },
+    async: false,
+  }).done((data) => {
+    PostContent = data.PostContent;
+  }).fail((err) => {
+    console.log(err)
+  })
+
+  return PostContent;
+
 }
