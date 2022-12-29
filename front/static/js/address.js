@@ -28,6 +28,9 @@ const LoginCheckAddress = '/GetLoginCheck';
 // 전체 게시글 조회
 const AllPostAddress = '/GetAllPost';
 
+// 닉네임 조회
+const NickNameAddress = '/GetNickName';
+
 // 게시글 저장
 const CreatPostAddress = '/GetCreatPost';
 

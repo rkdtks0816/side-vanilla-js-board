@@ -168,6 +168,30 @@ async def GetAllPost():
     except Exception as ex:
         _logger.Info(f"error to do 'GetAllPost()'")
 
+# 닉네임 조회
+async def GetNickName(UserID: str):
+    try:
+        connection = GetConnection()
+
+        with connection.cursor() as cursor:
+            query = f"""
+                select NickName from UserTable
+                where UserID = '{UserID}';
+            """
+
+            cursor.execute(query)            
+            
+            rv = cursor.fetchall()
+            json_data = json.dumps(rv, indent=4)
+            
+            _logger.Info(
+                f"succeed to do 'GetNickName('{UserID}')'")
+            
+            return json_data
+
+    except Exception as ex:
+        _logger.Info(f"error to do 'GetNickName('{UserID}')'")
+
 # 게시글 저장   
 async def GetCreatPost(NickName: str, UserID: str, PostTitle: str, PostContent: str, PostCreatDatetime: str):
     try:

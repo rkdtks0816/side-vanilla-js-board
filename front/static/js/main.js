@@ -115,3 +115,18 @@ function MainPaging () {
   paging(totalData, dataPerPage, pageCount, 1, globalCurrentPage);
   
 }
+
+// 게시글 작성
+function CreatPost () {
+  var PostTitle = document.getElementById('PostTitle').value;
+  var PostContent = document.getElementById('PostContent').value;
+
+  CreatPostCall(PostTitle, PostContent);
+  
+  //글 목록 표시 호출 (테이블 생성)
+  displayData(1, dataPerPage, totalData);
+  
+  //페이징 표시 호출
+  paging(totalData, dataPerPage, pageCount, 1, globalCurrentPage);
+  
+}

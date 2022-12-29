@@ -284,3 +284,5 @@
 2022-12-28 15:51:27,174 | SongBoardService | INFO | succeed to do 'GetLoginCheck('hi')'
 2022-12-28 15:51:28,330 | SongBoardService | INFO | succeed to do 'GetAllPost()'
 2022-12-28 15:51:34,029 | SongBoardService | INFO | succeed to do 'GetAllPost()'
+2022-12-29 00:46:57,367 | SongBoardService | INFO | succeed to do 'GetAllPost()'
+2022-12-29 00:47:02,688 | SongBoardService | INFO | succeed to do 'GetAllPost()'
