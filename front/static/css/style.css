@@ -381,6 +381,7 @@ a {
 .board_view {
     width: 100%;
     border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
 }
 
 .board_view .title {
@@ -433,14 +434,56 @@ a {
 
 .board_view .cont {
     padding: 15px;
-    border-bottom: 1px solid #000;
     line-height: 160%;
     font-size: 1.4rem;
 }
 
+.board_view .comment_input textarea {
+    display: block;
+    width: 100%;
+    height: 100px;
+    padding: 15px;
+    box-sizing: border-box;
+    resize: vertical;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #999;
+}
+
+.board_view .comment {
+    padding: 15px;
+    line-height: 160%;
+    font-size: 1.4rem;
+    border-top: 1px dashed #999;
+}
+
+.comment_bt {
+    margin-top: 10px;
+    font-size: 0;
+}
+
+.comment_bt a {
+    display: inline-block;
+    width: 30px;
+    height: 23px;
+    margin-left: 5px;
+    text-align:center;
+    border: 1px solid #000;
+    border-radius: 2px;
+    font-size: 1.1rem;
+}
+
+.comment_bt a:first-child {
+    margin-left: 0;
+}
+
+.comment_bt a.on {
+    background: #000;
+    color: #fff;
+}
+
 .board_write {
     border-top: 2px solid #000;
-    border-bottom: 1px solid #000;
+    border-bottom: 2px solid #000;
 }
 
 .board_write .title {
@@ -471,11 +514,8 @@ a {
 .board_write .title input[type="text"]{
     padding: 10px;
     box-sizing: border-box;
-    width: 80%;
-}
-
-.board_write .cont {
-    border-bottom: 1px solid #000;
+    width: 100%;
+    height: 200px;
 }
 
 .board_write .cont textarea {
