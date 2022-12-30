@@ -1,5 +1,5 @@
 // IP, PORT Address
-const ip = "10.0.2.15";
+const ip = "172.30.1.19";
 const port = "8001";
 
 // API Address

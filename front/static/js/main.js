@@ -197,7 +197,7 @@ function PostCookie(PostNum) {
   setCookie('PostTitle', totalData[1][PostNum], 1);
   setCookie('PostCreatDatetime', totalData[3][PostNum], 1);
 
-  location.replace("/view");
+  location.href = "/view";
 }
 
 // 수정 페이지
@@ -245,7 +245,7 @@ function UpdatePost() {
 
   alert("수정 되었습니다.");
 
-  location.replace("/view");
+  location.href = "/view";
   
 }
 

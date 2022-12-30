@@ -16,7 +16,7 @@ def datetime_to_json_formatting(o):
 
 # DB 연동
 def GetConnection():
-    connection = pymysql.connect(host='10.0.2.15', port=3306, user='root', password='1234',
+    connection = pymysql.connect(host='172.30.1.19', port=3306, user='root', password='1234',
                                     db='db_song', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
     return connection
 
