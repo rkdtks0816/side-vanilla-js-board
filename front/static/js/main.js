@@ -119,9 +119,11 @@ function MainPaging() {
 // 게시글 작성
 function CreatPost() {
   var PostTitle = document.getElementById('PostTitle').value;
+  var PostTitleEdit = PostTitle.replaceAll("'", '"');
   var PostContent = document.getElementById('PostContent').value;
+  var PostContentEdit = PostContent.replaceAll("'", '"');
 
-  CreatPostCall(PostTitle, PostContent);
+  CreatPostCall(PostTitleEdit, PostContentEdit);
 
   alert("등록 되었습니다.");
 
@@ -135,10 +137,13 @@ function ReadPost() {
   var NickName = getCookie('NickName');
   var PostTitle = getCookie('PostTitle');
   var PostCreatDatetime = getCookie('PostCreatDatetime');
-  var PostContent = ReadPostCall(NickName, PostTitle, PostCreatDatetime);
-  var PostContentedit = PostContent.replaceAll('\n', '<br>')
+  var PostContent = ReadPostCall(NickName, PostCreatDatetime);
+  var PostContentbr = PostContent.replaceAll('\n', '<br>');
+  var PostTitleEdit = PostTitle.replaceAll('"', "'");
+  var PostContentEdit = PostContentbr.replaceAll('"', "'");
 
-  $('.title').html(`${PostTitle}`);
+
+  $('.title').html(`${PostTitleEdit}`);
   $('.info').html(
     `<dl>` +
         `<dt>번호</dt>` +
@@ -153,14 +158,13 @@ function ReadPost() {
         `<dd>${PostCreatDatetime}</dd>` +
     `</dl>`
   );
-  $('.cont').html(`${PostContentedit}`);
+  $('.cont').html(`${PostContentEdit}`);
 
-  return NickName;
 }
 
 // 수정 버튼
-function updatebt(NickName) {
-
+function updatebt() {
+  var NickName = getCookie('NickName');
 
   if (getCookie('UserID') !== null) {
     var UserID = getCookie('UserID');
@@ -267,3 +271,157 @@ function DeletePost() {
   location.replace("/");
   
 }
+
+// // Comment #############################################################################################################################################
+
+// // 댓글 작성
+// function CreatComment() {
+//   var PostTitle = document.getElementById('PostTitle').value;
+//   var PostContent = document.getElementById('PostContent').value;
+
+//   CreatPostCall(PostTitle, PostContent);
+
+//   alert("등록 되었습니다.");
+
+//   location.replace("/view");
+
+// }
+
+// // 댓글 조회
+// function ReadPost() {
+//   var PostNum = getCookie('PostNum');
+//   var NickName = getCookie('NickName');
+//   var PostTitle = getCookie('PostTitle');
+//   var PostCreatDatetime = getCookie('PostCreatDatetime');
+//   var PostContent = ReadPostCall(NickName, PostTitle, PostCreatDatetime);
+//   var PostContentedit = PostContent.replaceAll('\n', '<br>')
+
+//   $('.title').html(`${PostTitle}`);
+//   $('.info').html(
+//     `<dl>` +
+//         `<dt>번호</dt>` +
+//         `<dd>${PostNum}</dd>` +
+//     `</dl>` +
+//     `<dl>` +
+//         `<dt>글쓴이</dt>` +
+//         `<dd>${NickName}</dd>` +
+//     `</dl>` +
+//     `<dl>` +
+//         `<dt>작성일</dt>` +
+//         `<dd>${PostCreatDatetime}</dd>` +
+//     `</dl>`
+//   );
+//   $('.cont').html(`${PostContentedit}`);
+
+//   return NickName;
+// }
+
+// // 수정 버튼
+// function updatebt(NickName) {
+
+
+//   if (getCookie('UserID') !== null) {
+//     var UserID = getCookie('UserID');
+//     var NowUser = NickNameCall(UserID);
+//     if (NickName === NowUser) {
+
+//       $('.bt_wrap').html(
+//         `<a href="/" class="on">목록</a>` +
+//         `<a href="/edit">수정</a>`
+//       )
+//     } else {
+//       $('.bt_wrap').html(`<a href="/" class="on">목록</a>`)
+//     }
+//   } else {
+//     $('.bt_wrap').html(`<a href="/" class="on">목록</a>`)
+//   }
+
+
+// }
+
+// // 게시글 쿠키
+// function PostCookie(PostNum) {
+//   let totalData; //총 데이터
+
+//   totalData = AllPostCall();
+
+//   deleteCookie('PostNum');
+//   deleteCookie('NickName');
+//   deleteCookie('PostTitle');
+//   deleteCookie('PostCreatDatetime');
+
+//   setCookie('PostNum', PostNum + 1, 1);
+//   setCookie('NickName', totalData[2][PostNum], 1);
+//   setCookie('PostTitle', totalData[1][PostNum], 1);
+//   setCookie('PostCreatDatetime', totalData[3][PostNum], 1);
+
+//   location.href = "/view";
+// }
+
+// // 수정 페이지
+// function BeforePost() {
+  
+//   var NickName = getCookie('NickName');
+//   var PostTitle = getCookie('PostTitle');
+//   var PostCreatDatetime = getCookie('PostCreatDatetime');
+//   var PostContent = ReadPostCall(NickName, PostTitle, PostCreatDatetime);
+
+//   $('.title').html(
+//     `<dl>` +
+//         `<dt>제목</dt>` +
+//         `<dd><input type="text" id="PostTitle" placeholder="제목 입력" value="${PostTitle}"></dd>` +
+//     `</dl>`
+//   );
+//   $('.cont').html(
+//     `<textarea id="PostContent" placeholder="내용 입력">` +
+//         `${PostContent}` +
+//     `</textarea>`
+//   );
+
+// }
+
+// // 게시글 수정
+// function UpdatePost() {
+
+//   var NickName = getCookie('NickName');
+//   var PostNum = getCookie('PostNum');
+//   var PostCreatDatetime = getCookie('PostCreatDatetime');
+//   var PostTitleUpdate = document.getElementById('PostTitle').value;
+//   var PostContentUpdate = document.getElementById('PostContent').value;
+
+//   UpdatePostCall(NickName, PostTitleUpdate, PostContentUpdate, PostCreatDatetime);
+
+//   deleteCookie('PostNum');
+//   deleteCookie('NickName');
+//   deleteCookie('PostTitle');
+//   deleteCookie('PostCreatDatetime');
+
+//   setCookie('PostNum', PostNum, 1);
+//   setCookie('NickName', NickName, 1);
+//   setCookie('PostTitle', PostTitleUpdate, 1);
+//   setCookie('PostCreatDatetime', PostCreatDatetime, 1);
+
+//   alert("수정 되었습니다.");
+
+//   location.href = "/view";
+  
+// }
+
+// // 게시글 삭제
+// function DeletePost() {
+
+//   var NickName = getCookie('NickName');
+//   var PostCreatDatetime = getCookie('PostCreatDatetime');
+
+//   DeletePostCall(NickName, PostCreatDatetime);
+
+//   deleteCookie('PostNum');
+//   deleteCookie('NickName');
+//   deleteCookie('PostTitle');
+//   deleteCookie('PostCreatDatetime');
+
+//   alert("삭제 되었습니다.");
+
+//   location.replace("/");
+  
+// }

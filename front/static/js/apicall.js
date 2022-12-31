@@ -232,7 +232,7 @@ function CreatPostCall(PostTitle, PostContent){
 }
 
 // 게시글 조회
-function ReadPostCall(NickName, PostTitle, PostCreatDatetime){
+function ReadPostCall(NickName, PostCreatDatetime){
   let PostContent;
 
   // api 호출
@@ -242,12 +242,10 @@ function ReadPostCall(NickName, PostTitle, PostCreatDatetime){
     dataType: 'json',
     data: { 
       "NickName":  NickName,
-      "PostTitle":  PostTitle,
       "PostCreatDatetime":  PostCreatDatetime,
     },
     async: false,
   }).done((data) => {
-    console.log(data);
     PostContent = data[0].PostContent;
   }).fail((err) => {
     console.log(err)
@@ -291,6 +289,131 @@ function DeletePostCall(NickName, PostCreatDatetime){
     data: { 
       "NickName":  NickName,
       "PostCreatDatetime":  PostCreatDatetime
+    },
+    async: false,
+  }).done((data) => {
+    console.log(data)
+  }).fail((err) => {
+    console.log(err)
+  })
+
+}
+
+// Comment #############################################################################################################################################
+
+// 전체 댓글 조회
+function AllCommentCall() {
+  let totalData = [];
+
+  $.ajax({
+    url: `http://${ip}:${port}${AllCommentAddress}`,
+    method: "GET",
+    dataType: "json",
+    async: false,
+    }).done((data) => {
+
+      // 데이터 정리
+      const CommentNickNameData = [];
+      const CommentContentData = [];
+      const CommentCreatDatetimeData = [];
+      data.forEach(function(key){
+        CommentNickNameData.push(key.CommentNickName);
+        CommentContentData.push(key.CommentContent);
+        CommentCreatDatetimeData.push(key.CommentCreatDatetime);
+      });
+
+      totalData.push(data.length);
+      totalData.push(CommentNickNameData);
+      totalData.push(CommentContentData);
+      totalData.push(CommentCreatDatetimeData);
+      
+    }).fail((err) => {
+      console.log(err)
+    })
+    
+    return totalData;
+}
+
+// 댓글 등록
+function CreatCommentCall(CommentContent){
+  let today = new Date();
+  let year = today.getFullYear();
+  year = year < 10 ? `0${year}` : year;
+  let month = today.getMonth()+1;
+  month = month < 10 ? `0${month}` : month;
+  let date = today.getDate();
+  date = date < 10 ? `0${date}` : date;
+  let hour = today.getHours();
+  hour = hour < 10 ? `0${hour}` : hour;
+  let minutes = today.getMinutes();
+  minutes = minutes < 10 ? `0${minutes}` : minutes;
+  let Seconds = today.getSeconds();
+  Seconds = Seconds < 10 ? `0${Seconds}` : Seconds;
+  let today_edit = `${year}-${month}-${date} ${hour}:${minutes}:${Seconds}`
+
+  var NickName = getCookie('NickName');
+  var PostCreatDatetime = getCookie('PostCreatDatetime');
+  let UserID = getCookie('UserID');
+  let CommentNickName = NickNameCall(UserID);
+
+  // api 호출
+  $.ajax({
+    url: `http://${ip}:${port}${CreatCommentAddress}`,
+    method: 'GET',
+    dataType: 'json',
+    data: { 
+      "NickName":  NickName,
+      "PostCreatDatetime":  PostCreatDatetime,
+      "CommentNickName":  CommentNickName,
+      "CommentContent":  CommentContent,
+      "CommentCreatDatetime":  today_edit
+    },
+    async: false,
+  }).done((data) => {
+    console.log(data)
+  }).fail((err) => {
+    console.log(err)
+  })
+
+}
+
+// 댓글 수정
+function UpdateCommentCall(NickName, PostCreatDatetime, CommentNickName, CommentContent, CommentCreatDatetime){
+
+  // api 호출
+  $.ajax({
+    url: `http://${ip}:${port}${UpdateCommentAddress}`,
+    method: 'GET',
+    dataType: 'json',
+    data: { 
+      "NickName":  NickName,
+      "PostCreatDatetime":  PostCreatDatetime,
+      "CommentNickName":  CommentNickName,
+      "CommentContent":  CommentContent,
+      "CommentCreatDatetime":  CommentCreatDatetime
+    },
+    async: false,
+  }).done((data) => {
+    console.log(data)
+  }).fail((err) => {
+    console.log(err)
+  })
+
+}
+
+// 댓글 삭제
+function DeleteCommentCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime){
+
+  // api 호출
+  $.ajax({
+    url: `http://${ip}:${port}${DeleteCommentAddress}`,
+    method: 'GET',
+    dataType: 'json',
+    data: { 
+      "NickName":  NickName,
+      "PostCreatDatetime":  PostCreatDatetime,
+      "CommentNickName":  CommentNickName,
+      "CommentCreatDatetime":  CommentCreatDatetime
     },
     async: false,
   }).done((data) => {

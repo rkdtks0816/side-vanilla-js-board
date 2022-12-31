@@ -16,7 +16,7 @@ def datetime_to_json_formatting(o):
 
 # DB 연동
 def GetConnection():
-    connection = pymysql.connect(host='172.30.1.19', port=3306, user='root', password='1234',
+    connection = pymysql.connect(host='125.191.175.102', port=3306, user='root', password='1234',
                                     db='db_song', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
     return connection
 
@@ -213,7 +213,7 @@ async def GetCreatPost(NickName: str, UserID: str, PostTitle: str, PostContent: 
         _logger.Info(f"error to do 'GetCreatPost('{NickName}', '{UserID}', '{PostTitle}', '{PostContent}', '{PostCreatDatetime}')'")
 
 # 게시글 조회
-async def GetReadPost(NickName: str, PostTitle: str, PostCreatDatetime: str):
+async def GetReadPost(NickName: str, PostCreatDatetime: str):
     try:
         connection = GetConnection()
 
@@ -224,7 +224,6 @@ async def GetReadPost(NickName: str, PostTitle: str, PostCreatDatetime: str):
                 from PostTable 
                 where 
                     NickName = '{NickName}' and 
-                    PostTitle = '{PostTitle}' and 
                     PostCreatDatetime = '{PostCreatDatetime}';
             """
 
@@ -234,12 +233,12 @@ async def GetReadPost(NickName: str, PostTitle: str, PostCreatDatetime: str):
             json_data = json.dumps(rv, indent=4)
             
             _logger.Info(
-                f"succeed to do 'GetReadPost('{NickName}', '{PostTitle}', '{PostCreatDatetime}')'")
+                f"succeed to do 'GetReadPost('{NickName}', '{PostCreatDatetime}')'")
             
             return json_data
 
     except Exception as ex:
-        _logger.Info(f"error to do 'GetReadPost('{NickName}', '{PostTitle}', '{PostCreatDatetime}')'")
+        _logger.Info(f"error to do 'GetReadPost('{NickName}', '{PostCreatDatetime}')'")
 
 # 게시글 수정   
 async def GetUpdatePost(NickName: str, PostTitle: str, PostContent: str, PostCreatDatetime: str):
@@ -291,3 +290,219 @@ async def GetDeletePost(NickName: str, PostCreatDatetime: str):
 
     except Exception as ex:
         _logger.Info(f"error to do 'GetDeletePost('{NickName}', '{PostCreatDatetime}')'")
+
+# Comment #############################################################################################################################################
+
+# 전체 댓글 조회
+async def GetAllComment():
+    try:
+        connection = GetConnection()
+
+        with connection.cursor() as cursor:
+            query = f"""
+                select
+                    CommentNickName,
+                    CommentContent,
+                    CommentCreatDatetime
+                from CommentTable 
+                order by CommentCreatDatetime desc;
+            """
+
+            cursor.execute(query)       
+            
+            rv = cursor.fetchall()
+            json_data = json.dumps(rv, default=datetime_to_json_formatting, indent=4)
+            
+            _logger.Info(
+                f"succeed to do 'GetAllComment()'")
+            
+            return json_data
+
+    except Exception as ex:
+        _logger.Info(f"error to do 'GetAllComment()'")
+
+# 댓글 저장   
+async def GetCreatComment(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentContent: str, CommentCreatDatetime: str):
+    try:
+        connection = GetConnection()
+
+        with connection.cursor() as cursor:
+            query = f"""
+                INSERT INTO CommentTable VALUES ( '{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentContent}', '{CommentCreatDatetime}' );
+            """
+
+            cursor.execute(query)
+
+            connection.commit()
+
+            _logger.Info(
+                f"succeed to do 'GetCreatComment('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentContent}', '{CommentCreatDatetime}')'")
+
+    except Exception as ex:
+        _logger.Info(f"error to do 'GetCreatComment('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentContent}', '{CommentCreatDatetime}')'")
+
+# 댓글 수정   
+async def GetUpdateComment(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentContent: str, CommentCreatDatetime: str):
+    try:
+        connection = GetConnection()
+
+        with connection.cursor() as cursor:
+            query = f"""
+                UPDATE CommentTable 
+                SET  
+                    CommentContent = '{CommentContent}'
+                WHERE
+                    NickName = '{NickName}' and
+                    PostCreatDatetime = '{PostCreatDatetime}' and
+                    CommentNickName = '{CommentNickName}' and
+                    CommentCreatDatetime = '{CommentCreatDatetime}';
+            """
+
+            cursor.execute(query)
+
+            connection.commit()
+
+            _logger.Info(
+                f"succeed to do 'GetUpdateComment('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentContent}', '{CommentCreatDatetime}')'")
+
+    except Exception as ex:
+        _logger.Info(f"error to do 'GetUpdateComment('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentContent}', '{CommentCreatDatetime}')'")
+
+
+# 댓글 삭제  
+async def GetDeleteComment(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str):
+    try:
+        connection = GetConnection()
+
+        with connection.cursor() as cursor:
+            query = f"""
+                delete 
+                from CommentTable 
+                where
+                    NickName = '{NickName}' and
+                    PostCreatDatetime = '{PostCreatDatetime}' and
+                    CommentNickName = '{CommentNickName}' and
+                    CommentCreatDatetime = '{CommentCreatDatetime}';
+            """
+
+            cursor.execute(query)
+
+            connection.commit()
+
+            _logger.Info(
+                f"succeed to do 'GetDeleteComment('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentCreatDatetime}')'")
+
+    except Exception as ex:
+        _logger.Info(f"error to do 'GetDeleteComment('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentCreatDatetime}')'")
+
+# Reply #############################################################################################################################################
+
+# 전체 답글 조회
+async def GetAllReply():
+    try:
+        connection = GetConnection()
+
+        with connection.cursor() as cursor:
+            query = f"""
+                select
+                    NickName,
+                    PostCreatDatetime,
+                    CommentNickName,
+                    CommentCreatDatetime,
+                    ReplyNickName,
+                    ReplyContent,
+                    ReplyCreatDatetime
+                from ReplyTable 
+                order by ReplyCreatDatetime desc;
+            """
+
+            cursor.execute(query)       
+            
+            rv = cursor.fetchall()
+            json_data = json.dumps(rv, default=datetime_to_json_formatting, indent=4)
+            
+            _logger.Info(
+                f"succeed to do 'GetAllReply()'")
+            
+            return json_data
+
+    except Exception as ex:
+        _logger.Info(f"error to do 'GetAllReply()'")
+
+# 답글 저장   
+async def GetCreatReply(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str, ReplyNickName: str, ReplyContent: str, ReplyCreatDatetime: str):
+    try:
+        connection = GetConnection()
+
+        with connection.cursor() as cursor:
+            query = f"""
+                INSERT INTO ReplyTable VALUES ( '{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentCreatDatetime}', '{ReplyNickName}', '{ReplyContent}', '{ReplyCreatDatetime}' );
+            """
+
+            cursor.execute(query)
+
+            connection.commit()
+
+            _logger.Info(
+                f"succeed to do 'GetCreatReply('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentCreatDatetime}', '{ReplyNickName}', '{ReplyContent}', '{ReplyCreatDatetime}')'")
+
+    except Exception as ex:
+        _logger.Info(f"error to do 'GetCreatReply('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentCreatDatetime}', '{ReplyNickName}', '{ReplyContent}', '{ReplyCreatDatetime}')'")
+
+# 답글 수정   
+async def GetUpdateReply(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str, ReplyNickName: str, ReplyContent: str, ReplyCreatDatetime: str):
+    try:
+        connection = GetConnection()
+
+        with connection.cursor() as cursor:
+            query = f"""
+                UPDATE ReplyTable 
+                SET  
+                    ReplyContent = '{ReplyContent}'
+                WHERE
+                    NickName = '{NickName}' and
+                    PostCreatDatetime = '{PostCreatDatetime}' and
+                    CommentNickName = '{CommentNickName}' and
+                    CommentCreatDatetime = '{CommentCreatDatetime}' and
+                    ReplyNickName = '{ReplyNickName}' and
+                    ReplyCreatDatetime = '{ReplyCreatDatetime}';
+            """
+
+            cursor.execute(query)
+
+            connection.commit()
+
+            _logger.Info(
+                f"succeed to do 'GetUpdateReply('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentCreatDatetime}', '{ReplyNickName}', '{ReplyContent}', '{ReplyCreatDatetime}')'")
+
+    except Exception as ex:
+        _logger.Info(f"error to do 'GetUpdateReply('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentCreatDatetime}', '{ReplyNickName}', '{ReplyContent}', '{ReplyCreatDatetime}')'")
+
+
+# 답글 삭제  
+async def GetDeleteReply(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str, ReplyNickName: str, ReplyCreatDatetime: str):
+    try:
+        connection = GetConnection()
+
+        with connection.cursor() as cursor:
+            query = f"""
+                delete 
+                from ReplyTable 
+                where
+                    NickName = '{NickName}' and
+                    PostCreatDatetime = '{PostCreatDatetime}' and
+                    CommentNickName = '{CommentNickName}' and
+                    CommentCreatDatetime = '{CommentCreatDatetime}' and
+                    ReplyNickName = '{ReplyNickName}' and
+                    ReplyCreatDatetime = '{ReplyCreatDatetime}';
+            """
+
+            cursor.execute(query)
+
+            connection.commit()
+
+            _logger.Info(
+                f"succeed to do 'GetDeleteReply('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentCreatDatetime}', '{ReplyNickName}', '{ReplyCreatDatetime}')'")
+
+    except Exception as ex:
+        _logger.Info(f"error to do 'GetDeleteReply('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentCreatDatetime}', '{ReplyNickName}', '{ReplyCreatDatetime}')'")

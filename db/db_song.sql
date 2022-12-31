@@ -15,7 +15,25 @@ CREATE TABLE IF NOT EXISTS `UserTable` (
 CREATE TABLE IF NOT EXISTS `PostTable` (
 `NickName` varchar(50) DEFAULT NULL,
 `UserID` varchar(50) DEFAULT NULL,
-`PostTitle` varchar(50) DEFAULT NULL,
-`PostContent` varchar(500) DEFAULT NULL,
+`PostTitle` text(10000) DEFAULT NULL,
+`PostContent` text(100000000) DEFAULT NULL,
 `PostCreatDatetime` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `CommentTable` (
+`NickName` varchar(50) DEFAULT NULL,
+`PostCreatDatetime` datetime DEFAULT NULL,
+`CommentNickName` varchar(50) DEFAULT NULL,
+`CommentContent` text(100000000) DEFAULT NULL,
+`CommentCreatDatetime` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `ReplyTable` (
+`NickName` varchar(50) DEFAULT NULL,
+`PostCreatDatetime` datetime DEFAULT NULL,
+`CommentNickName` varchar(50) DEFAULT NULL,
+`CommentCreatDatetime` datetime DEFAULT NULL,
+`ReplyNickName` varchar(50) DEFAULT NULL,
+`ReplyContent` text(100000000) DEFAULT NULL,
+`ReplyCreatDatetime` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

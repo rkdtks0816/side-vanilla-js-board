@@ -1,5 +1,5 @@
 // IP, PORT Address
-const ip = "172.30.1.19";
+const ip = "125.191.175.102";
 const port = "8001";
 
 // API Address
@@ -42,3 +42,31 @@ const UpdatePostAddress = '/GetUpdatePost';
 
 // 게시글 삭제 
 const DeletePostAddress = '/GetDeletePost';
+
+// Comment #############################################################################################################################################
+
+// 전체 댓글 조회
+const AllCommentAddress = '/GetAllComment';
+
+// 댓글 저장
+const CreatCommentAddress = '/GetCreatComment';
+
+// 댓글 수정 
+const UpdateCommentAddress = '/GetUpdateComment';
+
+// 댓글 삭제 
+const DeleteCommentAddress = '/GetDeleteComment';
+
+// Reply #############################################################################################################################################
+
+// 전체 답글 조회
+const AllReplyAddress = '/GetAllReply';
+
+// 답글 저장
+const CreatReplyAddress = '/GetCreatReply';
+
+// 답글 수정 
+const UpdateReplyAddress = '/GetUpdateReply';
+
+// 답글 삭제 
+const DeleteReplyAddress = '/GetDeleteReply';

@@ -1,6 +1,5 @@
 // 페이징 표시
 function paging(totalData, dataPerPage, pageCount, currentPage, globalCurrentPage) {
-    console.log("currentPage : " + currentPage);
   
     totalPage = Math.ceil(totalData[0] / dataPerPage); //총 페이지 수
     

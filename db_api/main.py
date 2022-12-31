@@ -24,7 +24,7 @@ app = FastAPI()
 
 # CORS
 origins = [
-    "http://172.30.1.19"
+    "http://125.191.175.102"
 ]
 
 app.add_middleware(
@@ -122,8 +122,8 @@ async def GetCreatPost(NickName: str, UserID: str, PostTitle: str, PostContent: 
 
 # 게시글 조회    
 @app.get("/GetReadPost")
-async def GetReadPost(NickName: str, PostTitle: str, PostCreatDatetime: str):
-    result = await SongBoardService.GetReadPost(NickName, PostTitle, PostCreatDatetime)
+async def GetReadPost(NickName: str, PostCreatDatetime: str):
+    result = await SongBoardService.GetReadPost(NickName, PostCreatDatetime)
     return Response(content=result, media_type="application/json")
     
 # 게시글 수정    
@@ -136,4 +136,56 @@ async def GetUpdatePost(NickName: str, PostTitle: str, PostContent: str, PostCre
 @app.get("/GetDeletePost")
 async def GetDeletePost(NickName: str, PostCreatDatetime: str):
     result = await SongBoardService.GetDeletePost(NickName, PostCreatDatetime)
+    return Response(content=result, media_type="application/json")
+
+# Comment #############################################################################################################################################
+
+# 모든 댓글 조회  
+@app.get("/GetAllComment")
+async def GetAllComment():
+    result = await SongBoardService.GetAllComment()
+    return Response(content=result, media_type="application/json")
+
+# 댓글 저장   
+@app.get("/GetCreatComment")
+async def GetCreatComment(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentContent: str, CommentCreatDatetime: str):
+    result = await SongBoardService.GetCreatComment(NickName, PostCreatDatetime, CommentNickName, CommentContent, CommentCreatDatetime)
+    return Response(content=result, media_type="application/json")
+    
+# 댓글 수정    
+@app.get("/GetUpdateComment")
+async def GetUpdateComment(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentContent: str, CommentCreatDatetime: str):
+    result = await SongBoardService.GetUpdateComment(NickName, PostCreatDatetime, CommentNickName, CommentContent, CommentCreatDatetime)
+    return Response(content=result, media_type="application/json")
+
+# 댓글 삭제   
+@app.get("/GetDeleteComment")
+async def GetDeleteComment(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str):
+    result = await SongBoardService.GetDeleteComment(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime)
+    return Response(content=result, media_type="application/json")
+    
+# Reply #############################################################################################################################################
+
+# 모든 답글 조회  
+@app.get("/GetAllReply")
+async def GetAllReply():
+    result = await SongBoardService.GetAllReply()
+    return Response(content=result, media_type="application/json")
+
+# 답글 저장   
+@app.get("/GetCreatReply")
+async def GetCreatReply(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str, ReplyNickName: str, ReplyContent: str, ReplyCreatDatetime: str):
+    result = await SongBoardService.GetCreatReply(NickName, PostCreatDatetime, CommentNickName, CommentContent, CommentCreatDatetime)
+    return Response(content=result, media_type="application/json")
+    
+# 답글 수정    
+@app.get("/GetUpdateReply")
+async def GetUpdateReply(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str, ReplyNickName: str, ReplyContent: str, ReplyCreatDatetime: str):
+    result = await SongBoardService.GetUpdateReply(NickName, PostCreatDatetime, CommentNickName, CommentContent, CommentCreatDatetime)
+    return Response(content=result, media_type="application/json")
+
+# 답글 삭제   
+@app.get("/GetDeleteReply")
+async def GetDeleteComment(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str, ReplyNickName: str, ReplyCreatDatetime: str):
+    result = await SongBoardService.GetDeleteReply(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime)
     return Response(content=result, media_type="application/json")
