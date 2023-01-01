@@ -294,7 +294,7 @@ async def GetDeletePost(NickName: str, PostCreatDatetime: str):
 # Comment #############################################################################################################################################
 
 # 전체 댓글 조회
-async def GetAllComment():
+async def GetAllComment(NickName: str, PostCreatDatetime: str):
     try:
         connection = GetConnection()
 
@@ -305,6 +305,9 @@ async def GetAllComment():
                     CommentContent,
                     CommentCreatDatetime
                 from CommentTable 
+                where
+                    NickName = '{NickName}' and
+                    PostCreatDatetime = '{PostCreatDatetime}';
                 order by CommentCreatDatetime desc;
             """
 

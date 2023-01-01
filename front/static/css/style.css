@@ -121,6 +121,7 @@ a {
     border: 1px solid #000;
     border-radius: 2px;
     font-size: 1.4rem;
+    cursor:pointer;
 }
 
 .SingUpbt_wrap a:first-child {
@@ -221,6 +222,7 @@ a {
     border: 1px solid #000;
     border-radius: 2px;
     font-size: 1.4rem;
+    cursor:pointer;
 }
 
 .loginbt_wrap a:first-child {
@@ -279,6 +281,7 @@ a {
     border: 1px solid #000;
     border-radius: 2px;
     font-size: 1.4rem;
+    cursor:pointer;
 }
 
 .bt_wrap a:first-child {
@@ -326,10 +329,12 @@ a {
 .board_list .title {
     width: 60%;
     text-align: left;
+    cursor:pointer;
 }
 
 .board_list .top .title {
     text-align: center;
+    cursor:text;
 }
 
 .board_list .writer {
@@ -445,7 +450,7 @@ a {
     padding: 15px;
     box-sizing: border-box;
     resize: vertical;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
     border-bottom: 1px solid #999;
 }
 
@@ -456,9 +461,35 @@ a {
     border-top: 1px dashed #999;
 }
 
-.comment_NickName {
+.CommentNickName,
+.CommentCreatDatetime {
     color: #999;
 }
+
+.comment_input_bt {
+    margin-bottom: 10px;
+    font-size: 0;
+}
+
+.comment_input_bt a {
+    display: inline-block;
+    padding: 3.5px;
+    margin-left: 5px;
+    text-align:center;
+    border: 1px solid #000;
+    border-radius: 2px;
+    font-size: 1.1rem;
+}
+
+.comment_input_bt a:first-child {
+    margin-left: 0;
+}
+
+.comment_input_bt a.on {
+    background: #000;
+    color: #fff;
+}
+
 
 .comment_bt {
     margin-top: 10px;

@@ -11,7 +11,7 @@
     <div class="board_wrap">
         <div class="board_title">
             <div class="board_title_text">
-                <strong>자유 게시판</strong>
+                <a href="/"><strong>자유 게시판</strong></a>
             </div>
             <div class="login">
             </div>
@@ -25,21 +25,9 @@
                 <div class="cont">
                 </div>
                 <div class="comment_input">
-                    <textarea id="PostComment" placeholder="댓글을 입력하세요."></textarea>
                 </div>
                 <div class="comment_box">
                     <div class="comment">
-                        <div class="comment_NickName">
-                            짱
-                        </div>
-                        <div class="comment_text">
-                            이
-                        </div>
-                        <div class="comment_bt">
-                            <a href="/" class="on">답글</a> 
-                            <a href="/edit">수정</a>
-                            <a href="/edit">삭제</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -54,6 +42,7 @@
 <script src="/static/js/address.js"></script>
 <script src="/static/js/apicall.js"></script>
 <script>
-    ReadPost();
-    updatebt();
+    updatebt(ReadPost());
+    Commentwritebt();
+    ReadComment();
 </script>

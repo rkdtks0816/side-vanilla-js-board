@@ -168,8 +168,8 @@ async def GetDeleteComment(NickName: str, PostCreatDatetime: str, CommentNickNam
 
 # 모든 답글 조회  
 @app.get("/GetAllReply")
-async def GetAllReply():
-    result = await SongBoardService.GetAllReply()
+async def GetAllReply(NickName: str, PostCreatDatetime: str):
+    result = await SongBoardService.GetAllReply(NickName, PostCreatDatetime)
     return Response(content=result, media_type="application/json")
 
 # 답글 저장   

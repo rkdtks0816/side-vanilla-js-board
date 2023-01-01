@@ -220,14 +220,8 @@ function CreatPostCall(PostTitle, PostContent){
   })
 
   deleteCookie('PostNum');
-  deleteCookie('NickName');
-  deleteCookie('PostTitle');
-  deleteCookie('PostCreatDatetime');
 
-  setCookie('PostNum', 1, 1);
-  setCookie('NickName', NickName, 1);
-  setCookie('PostTitle', PostTitle, 1);
-  setCookie('PostCreatDatetime', today_edit, 1);
+  setCookie('PostNum', 0, 1);
 
 }
 
@@ -302,13 +296,17 @@ function DeletePostCall(NickName, PostCreatDatetime){
 // Comment #############################################################################################################################################
 
 // 전체 댓글 조회
-function AllCommentCall() {
+function AllCommentCall(NickName, PostCreatDatetime) {
   let totalData = [];
 
   $.ajax({
     url: `http://${ip}:${port}${AllCommentAddress}`,
     method: "GET",
     dataType: "json",
+    data: { 
+      "NickName":  NickName,
+      "PostCreatDatetime":  PostCreatDatetime
+    },
     async: false,
     }).done((data) => {
 
@@ -335,7 +333,7 @@ function AllCommentCall() {
 }
 
 // 댓글 등록
-function CreatCommentCall(CommentContent){
+function CreatCommentCall(NickName, PostCreatDatetime, CommentContent){
   let today = new Date();
   let year = today.getFullYear();
   year = year < 10 ? `0${year}` : year;
@@ -351,8 +349,6 @@ function CreatCommentCall(CommentContent){
   Seconds = Seconds < 10 ? `0${Seconds}` : Seconds;
   let today_edit = `${year}-${month}-${date} ${hour}:${minutes}:${Seconds}`
 
-  var NickName = getCookie('NickName');
-  var PostCreatDatetime = getCookie('PostCreatDatetime');
   let UserID = getCookie('UserID');
   let CommentNickName = NickNameCall(UserID);
 

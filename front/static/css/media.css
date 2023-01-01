@@ -1,5 +1,7 @@
 @media (max-width: 1000px) {
-    .board_wrap {
+    .board_wrap,
+    .login_wrap,
+    .SignUp_wrap {
         width: 100%;
         min-width: 320px;
         padding: 0 30px;
@@ -7,12 +9,12 @@
     }
 
     .board_list .num,
-    .board_list .writer,
+    .board_list .date,
     .board_list .count {
         display: none;
     }
 
-    .board_list .date {
+    .board_list .writer {
         width: 40%;
     }
 
@@ -42,9 +44,15 @@
         padding: 0;
     }
 
+    .board_view .info dl:last-child {
+        width: 100%;
+        padding: 0;
+    }
+
     .board_view .info dl:nth-child(-n+2) {
         margin-bottom: 5px;
-    }
+    }    
+    
 
     .board_view .info dl::before {
         display: none;
