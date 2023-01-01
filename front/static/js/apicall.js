@@ -418,4 +418,142 @@ function DeleteCommentCall(NickName, PostCreatDatetime, CommentNickName, Comment
     console.log(err)
   })
 
+  window.location.reload();
+}
+
+// Reply #############################################################################################################################################
+
+// 전체 답글 조회
+function AllReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime) {
+  let totalData = [];
+
+  $.ajax({
+    url: `http://${ip}:${port}${AllReplyAddress}`,
+    method: "GET",
+    dataType: "json",
+    data: { 
+      "NickName":  NickName,
+      "PostCreatDatetime":  PostCreatDatetime,
+      "CommentNickName":  CommentNickName,
+      "CommentCreatDatetime":  CommentCreatDatetime
+    },
+    async: false,
+    }).done((data) => {
+
+      // 데이터 정리
+      const ReplyNickNameData = [];
+      const ReplyContentData = [];
+      const ReplyCreatDatetimeData = [];
+      data.forEach(function(key){
+        ReplyNickNameData.push(key.ReplyNickName);
+        ReplyContentData.push(key.ReplyContent);
+        ReplyCreatDatetimeData.push(key.ReplyCreatDatetime);
+      });
+
+      totalData.push(data.length);
+      totalData.push(ReplyNickNameData);
+      totalData.push(ReplyContentData);
+      totalData.push(ReplyCreatDatetimeData);
+      
+    }).fail((err) => {
+      console.log(err)
+    })
+    
+    return totalData;
+}
+
+// 답글 등록
+function CreatReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyContent){
+  let today = new Date();
+  let year = today.getFullYear();
+  year = year < 10 ? `0${year}` : year;
+  let month = today.getMonth()+1;
+  month = month < 10 ? `0${month}` : month;
+  let date = today.getDate();
+  date = date < 10 ? `0${date}` : date;
+  let hour = today.getHours();
+  hour = hour < 10 ? `0${hour}` : hour;
+  let minutes = today.getMinutes();
+  minutes = minutes < 10 ? `0${minutes}` : minutes;
+  let Seconds = today.getSeconds();
+  Seconds = Seconds < 10 ? `0${Seconds}` : Seconds;
+  let today_edit = `${year}-${month}-${date} ${hour}:${minutes}:${Seconds}`
+
+  let UserID = getCookie('UserID');
+  let ReplyNickName = NickNameCall(UserID);
+
+  // api 호출
+  $.ajax({
+    url: `http://${ip}:${port}${CreatReplyAddress}`,
+    method: 'GET',
+    dataType: 'json',
+    data: { 
+      "NickName":  NickName,
+      "PostCreatDatetime":  PostCreatDatetime,
+      "CommentNickName":  CommentNickName,
+      "CommentCreatDatetime":  CommentCreatDatetime,
+      "ReplyNickName":  ReplyNickName,
+      "ReplyContent":  ReplyContent,
+      "ReplyCreatDatetime":  today_edit
+    },
+    async: false,
+  }).done((data) => {
+    console.log(data)
+  }).fail((err) => {
+    console.log(err)
+  })
+
+}
+
+// 답글 수정
+function UpdateReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyNickName, ReplyContent, ReplyCreatDatetime){
+
+  // api 호출
+  $.ajax({
+    url: `http://${ip}:${port}${UpdateReplyAddress}`,
+    method: 'GET',
+    dataType: 'json',
+    data: { 
+      "NickName":  NickName,
+      "PostCreatDatetime":  PostCreatDatetime,
+      "CommentNickName":  CommentNickName,
+      "CommentCreatDatetime":  CommentCreatDatetime,
+      "ReplyNickName":  ReplyNickName,
+      "ReplyContent":  ReplyContent,
+      "ReplyCreatDatetime":  ReplyCreatDatetime
+    },
+    async: false,
+  }).done((data) => {
+    console.log(data)
+  }).fail((err) => {
+    console.log(err)
+  })
+
+}
+
+// 답글 삭제
+function DeleteReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyNickName, ReplyCreatDatetime, CommentNum){
+
+  // api 호출
+  $.ajax({
+    url: `http://${ip}:${port}${DeleteReplyAddress}`,
+    method: 'GET',
+    dataType: 'json',
+    data: { 
+      "NickName":  NickName,
+      "PostCreatDatetime":  PostCreatDatetime,
+      "CommentNickName":  CommentNickName,
+      "CommentCreatDatetime":  CommentCreatDatetime,
+      "ReplyNickName":  ReplyNickName,
+      "ReplyCreatDatetime":  ReplyCreatDatetime
+    },
+    async: false,
+  }).done((data) => {
+    console.log(data)
+  }).fail((err) => {
+    console.log(err)
+  })
+
+  ReplyOn(CommentNum);
+  
 }

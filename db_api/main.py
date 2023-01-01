@@ -142,8 +142,8 @@ async def GetDeletePost(NickName: str, PostCreatDatetime: str):
 
 # 모든 댓글 조회  
 @app.get("/GetAllComment")
-async def GetAllComment():
-    result = await SongBoardService.GetAllComment()
+async def GetAllComment(NickName: str, PostCreatDatetime: str):
+    result = await SongBoardService.GetAllComment(NickName, PostCreatDatetime)
     return Response(content=result, media_type="application/json")
 
 # 댓글 저장   
@@ -168,24 +168,24 @@ async def GetDeleteComment(NickName: str, PostCreatDatetime: str, CommentNickNam
 
 # 모든 답글 조회  
 @app.get("/GetAllReply")
-async def GetAllReply(NickName: str, PostCreatDatetime: str):
-    result = await SongBoardService.GetAllReply(NickName, PostCreatDatetime)
+async def GetAllReply(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str):
+    result = await SongBoardService.GetAllReply(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime)
     return Response(content=result, media_type="application/json")
 
 # 답글 저장   
 @app.get("/GetCreatReply")
 async def GetCreatReply(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str, ReplyNickName: str, ReplyContent: str, ReplyCreatDatetime: str):
-    result = await SongBoardService.GetCreatReply(NickName, PostCreatDatetime, CommentNickName, CommentContent, CommentCreatDatetime)
+    result = await SongBoardService.GetCreatReply(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyNickName, ReplyContent, ReplyCreatDatetime)
     return Response(content=result, media_type="application/json")
     
 # 답글 수정    
 @app.get("/GetUpdateReply")
 async def GetUpdateReply(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str, ReplyNickName: str, ReplyContent: str, ReplyCreatDatetime: str):
-    result = await SongBoardService.GetUpdateReply(NickName, PostCreatDatetime, CommentNickName, CommentContent, CommentCreatDatetime)
+    result = await SongBoardService.GetUpdateReply(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyNickName, ReplyContent, ReplyCreatDatetime)
     return Response(content=result, media_type="application/json")
 
 # 답글 삭제   
 @app.get("/GetDeleteReply")
 async def GetDeleteComment(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str, ReplyNickName: str, ReplyCreatDatetime: str):
-    result = await SongBoardService.GetDeleteReply(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime)
+    result = await SongBoardService.GetDeleteReply(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyNickName, ReplyCreatDatetime)
     return Response(content=result, media_type="application/json")

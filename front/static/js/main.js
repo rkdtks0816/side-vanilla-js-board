@@ -331,14 +331,74 @@ function ReadComment() {
 
   for (
     var i = 0;
-    i < Number(totalData[0]);
+    i < Number(CommenttotalData[0]);
     i++
-  ) {  
+  ) { 
     if (getCookie('UserID') !== null) {
       var UserID = getCookie('UserID');
       var NowUser = NickNameCall(UserID);
       if (CommentNickName[i] === NowUser) {
+        var updateComment = getCookie('updateComment');
+        if (updateComment === '0'+`${i}`) {
+          ContHtml += 
+            `<div class="comment">` +
+              `<textarea id="updateCommentContent" placeholder="댓글을 입력하세요.">${CommentContent[i]}</textarea>` +
+              `<div class="comment_bt">` +
+                  `<a onclick="updateCommentoutbt('${NickName}', '${PostCreatDatetime}', '${CommentNickName[i]}', '${CommentCreatDatetime[i]}')" class="on">등록</a>` +
+                  `<a onclick="DeleteCommentCall('${NickName}', '${PostCreatDatetime}', '${CommentNickName[i]}', '${CommentCreatDatetime[i]}')">삭제</a>` +
+              `</div>` +
+              `<div class="reply_input">` +
+              `</div>` +
+              `<div class="reply_box">` +
+              `</div>` +
+            `</div>`
+        } else {
+          ContHtml += 
+            `<div class="comment">` +
+              `<div class="CommentNickName">` +
+                  `${CommentNickName[i]}` +
+              `</div>` +
+              `<div class="CommentContent">` +
+                  `${CommentContent[i]}` +
+              `</div>` +
+              `<div class="CommentCreatDatetime">` +
+                  `${CommentCreatDatetime[i]}` +
+              `</div>` +
+              `<div class="comment_bt">` +
+                  `<a onclick="ReplyOn('${i}')" class="on">답글</a>` +
+                  `<a onclick="updateCommentinbt('${i}')">수정</a>` +
+                  `<a onclick="DeleteCommentCall('${NickName}', '${PostCreatDatetime}', '${CommentNickName[i]}', '${CommentCreatDatetime[i]}')">삭제</a>` +
+              `</div>` +
+              `<div class="reply_input">` +
+              `</div>` +
+              `<div class="reply_box">` +
+              `</div>` +
+            `</div>`
+        }
+      } else {
         ContHtml += 
+          `<div class="comment">` +
+            `<div class="CommentNickName">` +
+                `${CommentNickName[i]}` +
+            `</div>` +
+            `<div class="CommentContent">` +
+                `${CommentContent[i]}` +
+            `</div>` +
+            `<div class="CommentCreatDatetime">` +
+                `${CommentCreatDatetime[i]}` +
+            `</div>` +
+            `<div class="comment_bt">` +
+                `<a onclick="ReplyOn('${i}')" class="on">답글</a>` +
+            `</div>` +
+            `<div class="reply_input">` +
+            `</div>` +
+            `<div class="reply_box">` +
+            `</div>` +
+          `</div>`
+      }
+    } else {
+      ContHtml += 
+        `<div class="comment">` +
           `<div class="CommentNickName">` +
               `${CommentNickName[i]}` +
           `</div>` +
@@ -349,145 +409,192 @@ function ReadComment() {
               `${CommentCreatDatetime[i]}` +
           `</div>` +
           `<div class="comment_bt">` +
-              `<a href="/" class="on">답글</a>` +
-              `<a href="/edit">수정</a>` +
-              `<a href="/edit">삭제</a>` +
-          `</div>`
-      } else {
-        ContHtml += 
-          `<div class="CommentNickName">` +
-              `${CommentNickName[i]}` +
+              `<a onclick="ReplyOn('${i}')" class="on">답글</a>` +
           `</div>` +
-          `<div class="CommentContent">` +
-              `${CommentContent[i]}` +
+          `<div class="reply_input">` +
           `</div>` +
-          `<div class="CommentCreatDatetime">` +
-              `${CommentCreatDatetime[i]}` +
-          `</div>`
-      }
-    } else {
-      ContHtml += 
-        `<div class="CommentNickName">` +
-            `${CommentNickName[i]}` +
-        `</div>` +
-        `<div class="CommentContent">` +
-            `${CommentContent[i]}` +
-        `</div>` +
-        `<div class="CommentCreatDatetime">` +
-            `${CommentCreatDatetime[i]}` +
+          `<div class="reply_box">` +
+          `</div>` +
         `</div>`
     }
   }
 
-  $(".comment").html(ContHtml);
+  $(".comment_box").html(ContHtml);
 }
 
-// // 수정 버튼
-// function updatebt(NickName) {
+// 수정 버튼
+function updateCommentinbt(i) {
+  deleteCookie('updateComment');
+  setCookie('updateComment', '0' + `${i}`, 1);
+}
 
+function updateCommentoutbt(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime) {
+  var updateCommentContent = document.getElementById('updateCommentContent').value;
 
-//   if (getCookie('UserID') !== null) {
-//     var UserID = getCookie('UserID');
-//     var NowUser = NickNameCall(UserID);
-//     if (NickName === NowUser) {
+  UpdateCommentCall(NickName, PostCreatDatetime, CommentNickName, updateCommentContent, CommentCreatDatetime);
 
-//       $('.bt_wrap').html(
-//         `<a href="/" class="on">목록</a>` +
-//         `<a href="/edit">수정</a>`
-//       )
-//     } else {
-//       $('.bt_wrap').html(`<a href="/" class="on">목록</a>`)
-//     }
-//   } else {
-//     $('.bt_wrap').html(`<a href="/" class="on">목록</a>`)
-//   }
+  deleteCookie('updateComment');
+  setCookie('updateComment', 1, 1);
+}
 
+// Reply #############################################################################################################################################
 
-// }
+// 답글 등록
+function ReplyOn(CommentNum){
+  if (getCookie('UserID') !== null) {
+    $('.reply_input').html(
+      `<textarea id="ReplyContent" placeholder="답글을 입력하세요."></textarea>` +
+      `<div class="Reply_input_bt">` +
+          `<a onclick="CreatReply(${CommentNum})" class="on">등록</a>` +
+      `</div>`
+      )
+  } else {
+    $('.reply_input').html(``)
+  }
+  ReadReply(CommentNum);
+}
 
-// // 게시글 쿠키
-// function PostCookie(PostNum) {
-//   let totalData; //총 데이터
+function ReplyOff() {
+    $('.reply_input').html(``)
+    $(".reply_box").html('');
+}
 
-//   totalData = AllPostCall();
+// 답글 작성
+function CreatReply(CommentNum) {
+  let totalData; //총 데이터
 
-//   deleteCookie('PostNum');
-//   deleteCookie('NickName');
-//   deleteCookie('PostTitle');
-//   deleteCookie('PostCreatDatetime');
+  totalData = AllPostCall();
 
-//   setCookie('PostNum', PostNum + 1, 1);
-//   setCookie('NickName', totalData[2][PostNum], 1);
-//   setCookie('PostTitle', totalData[1][PostNum], 1);
-//   setCookie('PostCreatDatetime', totalData[3][PostNum], 1);
+  var PostNum = getCookie('PostNum');
+  var NickName = totalData[2][PostNum];
+  var PostCreatDatetime = totalData[3][PostNum];
+  let CommenttotalData; //총 데이터
 
-//   location.href = "/view";
-// }
+  CommenttotalData = AllCommentCall(NickName, PostCreatDatetime);
 
-// // 수정 페이지
-// function BeforePost() {
+  var CommentNickName = CommenttotalData[1][CommentNum];
+  var CommentCreatDatetime = CommenttotalData[3][CommentNum];
+  var ReplyContent = document.getElementById('ReplyContent').value;
+
+  CreatReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyContent);
+
+  ReplyOn(CommentNum);
+
+}
+
+// 답글 조회
+function ReadReply(CommentNum) {
+  let ContHtml = "";
+  let BottomHtml = "";
+  let TotalHtml = "";
+  let totalData; //총 데이터
+
+  totalData = AllPostCall();
+
+  var PostNum = getCookie('PostNum');
+  var NickName = totalData[2][PostNum];
+  var PostCreatDatetime = totalData[3][PostNum];
+  let CommenttotalData; //총 데이터
+
+  CommenttotalData = AllCommentCall(NickName, PostCreatDatetime);
+
+  var CommentNickName = CommenttotalData[1][CommentNum];
+  var CommentCreatDatetime = CommenttotalData[3][CommentNum];
+  let ReplytotalData; //총 데이터
+
+  ReplytotalData = AllReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime);
+
+  var ReplyNickName = ReplytotalData[1];
+  var ReplyContent = ReplytotalData[2];
+  var ReplyCreatDatetime = ReplytotalData[3];
+
+  for (
+    var i = 0;
+    i < Number(ReplytotalData[0]);
+    i++
+  ) { 
+    if (getCookie('UserID') !== null) {
+      var UserID = getCookie('UserID');
+      var NowUser = NickNameCall(UserID);
+      if (ReplyNickName[i] === NowUser) {
+        var updateReply = getCookie('updateReply');
+        if (updateReply === '0'+`${i}`) {
+          ContHtml += 
+            `<div class="reply">` +
+              `<textarea id="updateReplyContent" placeholder="답글을 입력하세요.">${ReplyContent[i]}</textarea>` +
+              `<div class="reply_bt">` +
+                  `<a onclick="CreatReply('${i}')" class="on">등록</a>` +
+                  `<a onclick="DeleteReplyCall('${NickName}', '${PostCreatDatetime}', '${CommentNickName}', '${CommentCreatDatetime}', '${ReplyNickName[i]}', '${ReplyCreatDatetime[i]}', '${i}')">삭제</a>` +
+              `</div>` +
+            `</div>`
+        } else {
+          ContHtml += 
+            `<div class="reply">` +
+              `<div class="ReplyNickName">` +
+                  `${ReplyNickName[i]}` +
+              `</div>` +
+              `<div class="ReplyContent">` +
+                  `${ReplyContent[i]}` +
+              `</div>` +
+              `<div class="ReplyCreatDatetime">` +
+                  `${ReplyCreatDatetime[i]}` +
+              `</div>` +
+              `<div class="reply_bt">` +
+                  `<a onclick="updateReplyinbt('${i}')" class="on">수정</a>` +
+                  `<a onclick="DeleteReplyCall('${NickName}', '${PostCreatDatetime}', '${CommentNickName}', '${CommentCreatDatetime}', '${ReplyNickName[i]}', '${ReplyCreatDatetime[i]}', '${i}')">삭제</a>` +
+              `</div>` +
+            `</div>`
+        }
+      } else {
+        ContHtml += 
+          `<div class="reply">` +
+            `<div class="ReplyNickName">` +
+                `${ReplyNickName[i]}` +
+            `</div>` +
+            `<div class="ReplyContent">` +
+                `${ReplyContent[i]}` +
+            `</div>` +
+            `<div class="ReplyCreatDatetime">` +
+                `${ReplyCreatDatetime[i]}` +
+            `</div>` +
+          `</div>`
+      }
+    } else {
+      ContHtml += 
+        `<div class="reply">` +
+          `<div class="ReplyNickName">` +
+              `${ReplyNickName[i]}` +
+          `</div>` +
+          `<div class="ReplyContent">` +
+              `${ReplyContent[i]}` +
+          `</div>` +
+          `<div class="ReplyCreatDatetime">` +
+              `${ReplyCreatDatetime[i]}` +
+          `</div>` +
+        `</div>`
+    }
+  }
+  BottomHtml =
+      '<div class="bottom">' +
+          '<a onclick="ReplyOff()" class="on">접기</a>' +
+      '</div>';
   
-//   var NickName = getCookie('NickName');
-//   var PostTitle = getCookie('PostTitle');
-//   var PostCreatDatetime = getCookie('PostCreatDatetime');
-//   var PostContent = ReadPostCall(NickName, PostTitle, PostCreatDatetime);
+  TotalHtml = ContHtml + BottomHtml;
+  $(".reply_box").html(TotalHtml);
+}
 
-//   $('.title').html(
-//     `<dl>` +
-//         `<dt>제목</dt>` +
-//         `<dd><input type="text" id="PostTitle" placeholder="제목 입력" value="${PostTitle}"></dd>` +
-//     `</dl>`
-//   );
-//   $('.cont').html(
-//     `<textarea id="PostContent" placeholder="내용 입력">` +
-//         `${PostContent}` +
-//     `</textarea>`
-//   );
+// 수정 버튼
+function updateReplyinbt(i) {
+  deleteCookie('updateReply');
+  setCookie('updateReply', '0' + `${i}`, 1);
+  ReplyOn(CommentNum);
+}
 
-// }
+function updateReplyoutbt(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyNickName, ReplyCreatDatetime, CommentNum) {
+  var updateReplyContent = document.getElementById('updateReplyContent').value;
 
-// // 게시글 수정
-// function UpdatePost() {
+  UpdateReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyNickName, updateReplyContent, ReplyCreatDatetime);
 
-//   var NickName = getCookie('NickName');
-//   var PostNum = getCookie('PostNum');
-//   var PostCreatDatetime = getCookie('PostCreatDatetime');
-//   var PostTitleUpdate = document.getElementById('PostTitle').value;
-//   var PostContentUpdate = document.getElementById('PostContent').value;
-
-//   UpdatePostCall(NickName, PostTitleUpdate, PostContentUpdate, PostCreatDatetime);
-
-//   deleteCookie('PostNum');
-//   deleteCookie('NickName');
-//   deleteCookie('PostTitle');
-//   deleteCookie('PostCreatDatetime');
-
-//   setCookie('PostNum', PostNum, 1);
-//   setCookie('NickName', NickName, 1);
-//   setCookie('PostTitle', PostTitleUpdate, 1);
-//   setCookie('PostCreatDatetime', PostCreatDatetime, 1);
-
-//   alert("수정 되었습니다.");
-
-//   location.href = "/view";
-  
-// }
-
-// // 게시글 삭제
-// function DeletePost() {
-
-//   var NickName = getCookie('NickName');
-//   var PostCreatDatetime = getCookie('PostCreatDatetime');
-
-//   DeletePostCall(NickName, PostCreatDatetime);
-
-//   deleteCookie('PostNum');
-//   deleteCookie('NickName');
-//   deleteCookie('PostTitle');
-//   deleteCookie('PostCreatDatetime');
-
-//   alert("삭제 되었습니다.");
-
-//   location.replace("/");
-  
-// }
+  deleteCookie('updateReply');
+  setCookie('updateReply', 1, 1);
+}

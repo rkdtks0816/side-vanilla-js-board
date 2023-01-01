@@ -307,7 +307,7 @@ async def GetAllComment(NickName: str, PostCreatDatetime: str):
                 from CommentTable 
                 where
                     NickName = '{NickName}' and
-                    PostCreatDatetime = '{PostCreatDatetime}';
+                    PostCreatDatetime = '{PostCreatDatetime}'
                 order by CommentCreatDatetime desc;
             """
 
@@ -317,12 +317,12 @@ async def GetAllComment(NickName: str, PostCreatDatetime: str):
             json_data = json.dumps(rv, default=datetime_to_json_formatting, indent=4)
             
             _logger.Info(
-                f"succeed to do 'GetAllComment()'")
+                f"succeed to do 'GetAllComment('{NickName}', '{PostCreatDatetime}')'")
             
             return json_data
 
     except Exception as ex:
-        _logger.Info(f"error to do 'GetAllComment()'")
+        _logger.Info(f"error to do 'GetAllComment('{NickName}', '{PostCreatDatetime}')'")
 
 # 댓글 저장   
 async def GetCreatComment(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentContent: str, CommentCreatDatetime: str):
@@ -401,21 +401,22 @@ async def GetDeleteComment(NickName: str, PostCreatDatetime: str, CommentNickNam
 # Reply #############################################################################################################################################
 
 # 전체 답글 조회
-async def GetAllReply():
+async def GetAllReply(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str):
     try:
         connection = GetConnection()
 
         with connection.cursor() as cursor:
             query = f"""
                 select
-                    NickName,
-                    PostCreatDatetime,
-                    CommentNickName,
-                    CommentCreatDatetime,
                     ReplyNickName,
                     ReplyContent,
                     ReplyCreatDatetime
                 from ReplyTable 
+                where
+                    NickName = '{NickName}' and
+                    PostCreatDatetime = '{PostCreatDatetime}' and
+                    CommentNickName = '{CommentNickName}' and
+                    CommentCreatDatetime = '{CommentCreatDatetime}'
                 order by ReplyCreatDatetime desc;
             """
 
@@ -425,12 +426,12 @@ async def GetAllReply():
             json_data = json.dumps(rv, default=datetime_to_json_formatting, indent=4)
             
             _logger.Info(
-                f"succeed to do 'GetAllReply()'")
+                f"succeed to do 'GetAllReply('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentCreatDatetime}')'")
             
             return json_data
 
     except Exception as ex:
-        _logger.Info(f"error to do 'GetAllReply()'")
+        _logger.Info(f"error to do 'GetAllReply('{NickName}', '{PostCreatDatetime}', '{CommentNickName}', '{CommentCreatDatetime}')'")
 
 # 답글 저장   
 async def GetCreatReply(NickName: str, PostCreatDatetime: str, CommentNickName: str, CommentCreatDatetime: str, ReplyNickName: str, ReplyContent: str, ReplyCreatDatetime: str):
