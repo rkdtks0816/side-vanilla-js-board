@@ -181,7 +181,8 @@ function updatebt(NickName) {
 
       $('.bt_wrap').html(
         `<a href="/" class="on">목록</a>` +
-        `<a onclick="updatebtClick()">수정</a>`
+        `<a onclick="updatebtClick()">수정</a>` +
+        `<a onclick="DeletePost()">삭제</a>`
       )
     } else {
       $('.bt_wrap').html(`<a href="/" class="on">목록</a>`)
@@ -347,7 +348,7 @@ function ReadComment() {
                   `<a onclick="updateCommentoutbt('${NickName}', '${PostCreatDatetime}', '${CommentNickName[i]}', '${CommentCreatDatetime[i]}')" class="on">등록</a>` +
                   `<a onclick="DeleteCommentCall('${NickName}', '${PostCreatDatetime}', '${CommentNickName[i]}', '${CommentCreatDatetime[i]}')">삭제</a>` +
               `</div>` +
-              `<div class="reply_input_${i}">` +
+              `<div class="reply_input_${i} reply_input">` +
               `</div>` +
               `<div class="reply_box_${i}">` +
               `</div>` +
@@ -369,7 +370,7 @@ function ReadComment() {
                   `<a onclick="updateCommentinbt('${i}')">수정</a>` +
                   `<a onclick="DeleteCommentCall('${NickName}', '${PostCreatDatetime}', '${CommentNickName[i]}', '${CommentCreatDatetime[i]}')">삭제</a>` +
               `</div>` +
-              `<div class="reply_input_${i}">` +
+              `<div class="reply_input_${i} reply_input">` +
               `</div>` +
               `<div class="reply_box_${i}">` +
               `</div>` +
@@ -390,7 +391,7 @@ function ReadComment() {
             `<div class="comment_bt">` +
                 `<a onclick="ReplyOn('${i}')" class="on">답글</a>` +
             `</div>` +
-            `<div class="reply_input_${i}">` +
+            `<div class="reply_input_${i} reply_input">` +
             `</div>` +
             `<div class="reply_box_${i}">` +
             `</div>` +
@@ -411,7 +412,7 @@ function ReadComment() {
           `<div class="comment_bt">` +
               `<a onclick="ReplyOn(${i})" class="on">답글</a>` +
           `</div>` +
-          `<div class="reply_input_${i}">` +
+          `<div class="reply_input_${i} reply_input">` +
           `</div>` +
           `<div class="reply_box_${i}">` +
           `</div>` +
@@ -445,7 +446,7 @@ function ReplyOn(CommentNum, updateReply){
   if (getCookie('UserID') !== null) {
     $(`.reply_input_${NumCommentNum}`).html(
       `<textarea id="ReplyContent_${NumCommentNum}" placeholder="답글을 입력하세요."></textarea>` +
-      `<div class="Reply_input_bt">` +
+      `<div class="reply_input_bt">` +
           `<a onclick="CreatReply(${NumCommentNum})" class="on">등록</a>` +
       `</div>`
       )
@@ -578,7 +579,7 @@ function ReadReply(CommentNum, updateReply) {
   }
   BottomHtml =
       '<div class="bottom">' +
-          `<a onclick="ReplyOff(${NumCommentNum})" class="on">접기</a>` +
+          `<a onclick="ReplyOff(${NumCommentNum})">접기</a>` +
       '</div>';
   
   TotalHtml = ContHtml + BottomHtml;

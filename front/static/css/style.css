@@ -516,6 +516,82 @@ a {
     color: #fff;
 }
 
+.comment .reply_input textarea {
+    display: block;
+    width: 100%;
+    height: 100px;
+    padding: 15px;
+    box-sizing: border-box;
+    resize: vertical;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #999;
+}
+
+.comment .reply {
+    background-color: #ddd;
+    padding: 15px;
+    line-height: 160%;
+    font-size: 1.4rem;
+    border-top: 1px dashed #999;
+}
+
+.replyNickName,
+.replyCreatDatetime {
+    color: #999;
+}
+
+.reply_input_bt{
+    margin-bottom: 10px;
+    font-size: 0;
+}
+
+.reply_input_bt a {
+    display: inline-block;
+    padding: 3.5px;
+    margin-left: 5px;
+    text-align:center;
+    border: 1px solid #000;
+    border-radius: 2px;
+    font-size: 1.1rem;
+}
+
+.reply_input_bt a:first-child {
+    margin-left: 0;
+}
+
+.reply_input_bt a.on {
+    background: #000;
+    color: #fff;
+}
+
+
+.reply_bt,
+.bottom {
+    margin-top: 10px;
+    font-size: 0;
+}
+
+.reply_bt a, 
+.bottom a {
+    display: inline-block;
+    width: 30px;
+    height: 23px;
+    margin-left: 5px;
+    text-align:center;
+    border: 1px solid #000;
+    border-radius: 2px;
+    font-size: 1.1rem;
+}
+
+.reply_bt a:first-child {
+    margin-left: 0;
+}
+
+.reply_bt a.on {
+    background: #000;
+    color: #fff;
+}
+
 .board_write {
     border-top: 2px solid #000;
     border-bottom: 2px solid #000;
