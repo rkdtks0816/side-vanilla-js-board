@@ -497,10 +497,6 @@ function CreatReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCre
       "ReplyCreatDatetime":  today_edit
     },
     async: false,
-  }).done((data) => {
-    console.log(data)
-  }).fail((err) => {
-    console.log(err)
   })
 
 }
@@ -523,10 +519,6 @@ function UpdateReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCr
       "ReplyCreatDatetime":  ReplyCreatDatetime
     },
     async: false,
-  }).done((data) => {
-    console.log(data)
-  }).fail((err) => {
-    console.log(err)
   })
 
 }
@@ -548,12 +540,7 @@ function DeleteReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCr
       "ReplyCreatDatetime":  ReplyCreatDatetime
     },
     async: false,
-  }).done((data) => {
-    console.log(data)
-  }).fail((err) => {
-    console.log(err)
   })
-
-  ReplyOn(CommentNum);
+  ReplyOn(CommentNum, 1);
   
 }

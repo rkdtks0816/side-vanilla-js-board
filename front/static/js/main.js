@@ -347,9 +347,9 @@ function ReadComment() {
                   `<a onclick="updateCommentoutbt('${NickName}', '${PostCreatDatetime}', '${CommentNickName[i]}', '${CommentCreatDatetime[i]}')" class="on">등록</a>` +
                   `<a onclick="DeleteCommentCall('${NickName}', '${PostCreatDatetime}', '${CommentNickName[i]}', '${CommentCreatDatetime[i]}')">삭제</a>` +
               `</div>` +
-              `<div class="reply_input">` +
+              `<div class="reply_input_${i}">` +
               `</div>` +
-              `<div class="reply_box">` +
+              `<div class="reply_box_${i}">` +
               `</div>` +
             `</div>`
         } else {
@@ -369,9 +369,9 @@ function ReadComment() {
                   `<a onclick="updateCommentinbt('${i}')">수정</a>` +
                   `<a onclick="DeleteCommentCall('${NickName}', '${PostCreatDatetime}', '${CommentNickName[i]}', '${CommentCreatDatetime[i]}')">삭제</a>` +
               `</div>` +
-              `<div class="reply_input">` +
+              `<div class="reply_input_${i}">` +
               `</div>` +
-              `<div class="reply_box">` +
+              `<div class="reply_box_${i}">` +
               `</div>` +
             `</div>`
         }
@@ -390,9 +390,9 @@ function ReadComment() {
             `<div class="comment_bt">` +
                 `<a onclick="ReplyOn('${i}')" class="on">답글</a>` +
             `</div>` +
-            `<div class="reply_input">` +
+            `<div class="reply_input_${i}">` +
             `</div>` +
-            `<div class="reply_box">` +
+            `<div class="reply_box_${i}">` +
             `</div>` +
           `</div>`
       }
@@ -409,11 +409,11 @@ function ReadComment() {
               `${CommentCreatDatetime[i]}` +
           `</div>` +
           `<div class="comment_bt">` +
-              `<a onclick="ReplyOn('${i}')" class="on">답글</a>` +
+              `<a onclick="ReplyOn(${i})" class="on">답글</a>` +
           `</div>` +
-          `<div class="reply_input">` +
+          `<div class="reply_input_${i}">` +
           `</div>` +
-          `<div class="reply_box">` +
+          `<div class="reply_box_${i}">` +
           `</div>` +
         `</div>`
     }
@@ -440,27 +440,30 @@ function updateCommentoutbt(NickName, PostCreatDatetime, CommentNickName, Commen
 // Reply #############################################################################################################################################
 
 // 답글 등록
-function ReplyOn(CommentNum){
+function ReplyOn(CommentNum, updateReply){
+  var NumCommentNum = Number(CommentNum);
   if (getCookie('UserID') !== null) {
-    $('.reply_input').html(
-      `<textarea id="ReplyContent" placeholder="답글을 입력하세요."></textarea>` +
+    $(`.reply_input_${NumCommentNum}`).html(
+      `<textarea id="ReplyContent_${NumCommentNum}" placeholder="답글을 입력하세요."></textarea>` +
       `<div class="Reply_input_bt">` +
-          `<a onclick="CreatReply(${CommentNum})" class="on">등록</a>` +
+          `<a onclick="CreatReply(${NumCommentNum})" class="on">등록</a>` +
       `</div>`
       )
   } else {
-    $('.reply_input').html(``)
+    $(`.reply_input_${NumCommentNum}`).html(``)
   }
-  ReadReply(CommentNum);
+  ReadReply(NumCommentNum, updateReply);
 }
 
-function ReplyOff() {
-    $('.reply_input').html(``)
-    $(".reply_box").html('');
+function ReplyOff(CommentNum) {
+  var NumCommentNum = Number(CommentNum);
+    $(`.reply_input_${NumCommentNum}`).html(``)
+    $(`.reply_box_${NumCommentNum}`).html('');
 }
 
 // 답글 작성
 function CreatReply(CommentNum) {
+  var NumCommentNum = Number(CommentNum);
   let totalData; //총 데이터
 
   totalData = AllPostCall();
@@ -472,18 +475,18 @@ function CreatReply(CommentNum) {
 
   CommenttotalData = AllCommentCall(NickName, PostCreatDatetime);
 
-  var CommentNickName = CommenttotalData[1][CommentNum];
-  var CommentCreatDatetime = CommenttotalData[3][CommentNum];
-  var ReplyContent = document.getElementById('ReplyContent').value;
+  var CommentNickName = CommenttotalData[1][NumCommentNum];
+  var CommentCreatDatetime = CommenttotalData[3][NumCommentNum];
+  var ReplyContent = document.getElementById(`ReplyContent_${NumCommentNum}`).value;
 
   CreatReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyContent);
 
-  ReplyOn(CommentNum);
+  ReplyOn(NumCommentNum, 1);
 
 }
 
 // 답글 조회
-function ReadReply(CommentNum) {
+function ReadReply(CommentNum, updateReply) {
   let ContHtml = "";
   let BottomHtml = "";
   let TotalHtml = "";
@@ -497,9 +500,9 @@ function ReadReply(CommentNum) {
   let CommenttotalData; //총 데이터
 
   CommenttotalData = AllCommentCall(NickName, PostCreatDatetime);
-
-  var CommentNickName = CommenttotalData[1][CommentNum];
-  var CommentCreatDatetime = CommenttotalData[3][CommentNum];
+  var NumCommentNum = Number(CommentNum);
+  var CommentNickName = CommenttotalData[1][NumCommentNum];
+  var CommentCreatDatetime = CommenttotalData[3][NumCommentNum];
   let ReplytotalData; //총 데이터
 
   ReplytotalData = AllReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime);
@@ -517,14 +520,13 @@ function ReadReply(CommentNum) {
       var UserID = getCookie('UserID');
       var NowUser = NickNameCall(UserID);
       if (ReplyNickName[i] === NowUser) {
-        var updateReply = getCookie('updateReply');
         if (updateReply === '0'+`${i}`) {
           ContHtml += 
             `<div class="reply">` +
               `<textarea id="updateReplyContent" placeholder="답글을 입력하세요.">${ReplyContent[i]}</textarea>` +
               `<div class="reply_bt">` +
-                  `<a onclick="CreatReply('${i}')" class="on">등록</a>` +
-                  `<a onclick="DeleteReplyCall('${NickName}', '${PostCreatDatetime}', '${CommentNickName}', '${CommentCreatDatetime}', '${ReplyNickName[i]}', '${ReplyCreatDatetime[i]}', '${i}')">삭제</a>` +
+                  `<a onclick="updateReplyoutbt('${NickName}', '${PostCreatDatetime}', '${CommentNickName}', '${CommentCreatDatetime}', '${ReplyNickName[i]}', '${ReplyCreatDatetime[i]}', ${i})" class="on">등록</a>` +
+                  `<a onclick="DeleteReply('${NickName}', '${PostCreatDatetime}', '${CommentNickName}', '${CommentCreatDatetime}', '${ReplyNickName[i]}', '${ReplyCreatDatetime[i]}', ${i})">삭제</a>` +
               `</div>` +
             `</div>`
         } else {
@@ -540,8 +542,8 @@ function ReadReply(CommentNum) {
                   `${ReplyCreatDatetime[i]}` +
               `</div>` +
               `<div class="reply_bt">` +
-                  `<a onclick="updateReplyinbt('${i}')" class="on">수정</a>` +
-                  `<a onclick="DeleteReplyCall('${NickName}', '${PostCreatDatetime}', '${CommentNickName}', '${CommentCreatDatetime}', '${ReplyNickName[i]}', '${ReplyCreatDatetime[i]}', '${i}')">삭제</a>` +
+                  `<a onclick="updateReplyinbt(${i})" class="on">수정</a>` +
+                  `<a onclick="DeleteReply('${NickName}', '${PostCreatDatetime}', '${CommentNickName}', '${CommentCreatDatetime}', '${ReplyNickName[i]}', '${ReplyCreatDatetime[i]}', ${i})">삭제</a>` +
               `</div>` +
             `</div>`
         }
@@ -576,25 +578,35 @@ function ReadReply(CommentNum) {
   }
   BottomHtml =
       '<div class="bottom">' +
-          '<a onclick="ReplyOff()" class="on">접기</a>' +
+          `<a onclick="ReplyOff(${NumCommentNum})" class="on">접기</a>` +
       '</div>';
   
   TotalHtml = ContHtml + BottomHtml;
-  $(".reply_box").html(TotalHtml);
+  $(`.reply_box_${NumCommentNum}`).html(TotalHtml);
 }
 
 // 수정 버튼
-function updateReplyinbt(i) {
-  deleteCookie('updateReply');
-  setCookie('updateReply', '0' + `${i}`, 1);
-  ReplyOn(CommentNum);
+function updateReplyinbt(CommentNum) {
+  var NumCommentNum = Number(CommentNum);
+  var updateReply = '0' + `${NumCommentNum}`;
+  ReplyOn(NumCommentNum, updateReply);
 }
 
 function updateReplyoutbt(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyNickName, ReplyCreatDatetime, CommentNum) {
+  var NumCommentNum = Number(CommentNum);
   var updateReplyContent = document.getElementById('updateReplyContent').value;
 
   UpdateReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyNickName, updateReplyContent, ReplyCreatDatetime);
 
-  deleteCookie('updateReply');
-  setCookie('updateReply', 1, 1);
+  var updateReply = 1;
+  ReplyOn(NumCommentNum, updateReply);
+}
+
+// 답글 삭제
+function DeleteReply(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyNickName, ReplyCreatDatetime, CommentNum){
+  var NumCommentNum = Number(CommentNum);
+
+  DeleteReplyCall(NickName, PostCreatDatetime, CommentNickName, CommentCreatDatetime, ReplyNickName, ReplyCreatDatetime, NumCommentNum);
+  ReplyOn(NumCommentNum, 1);
+  
 }
