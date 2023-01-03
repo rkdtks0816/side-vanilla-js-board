@@ -479,6 +479,7 @@ a {
     border: 1px solid #000;
     border-radius: 2px;
     font-size: 1.1rem;
+    cursor:pointer;
 }
 
 .comment_input_bt a:first-child {
@@ -505,6 +506,7 @@ a {
     border: 1px solid #000;
     border-radius: 2px;
     font-size: 1.1rem;
+    cursor:pointer;
 }
 
 .comment_bt a:first-child {
@@ -553,6 +555,7 @@ a {
     border: 1px solid #000;
     border-radius: 2px;
     font-size: 1.1rem;
+    cursor:pointer;
 }
 
 .reply_input_bt a:first-child {
@@ -581,6 +584,7 @@ a {
     border: 1px solid #000;
     border-radius: 2px;
     font-size: 1.1rem;
+    cursor:pointer;
 }
 
 .reply_bt a:first-child {
